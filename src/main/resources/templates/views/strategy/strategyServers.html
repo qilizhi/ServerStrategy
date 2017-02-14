@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title th:text="#{views.server.list.serverManagement}">服务器管理</title>
+</head>
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.server.list.serverManagementList}">服务器管理列表</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.server.list.serverManagement}">服务器管理</a></li>
+		<li><a th:href="@{~/server/list}" th:text="#{views.server.list.serverManagementList}">服务器列表</a></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-table" th:text="#{views.server.list.list}" >列表</span> 
+			</div>
+			 <div class="tpl-portlet-input tpl-fz-ml">
+				<div class="portlet-input input-small input-inline">
+					<div class="right">
+						<!-- <a href="javascript:history.go(-1)">返回</a> -->
+						<a th:href="@{~/strategy/list(type.id=${typeId})}" th:text="#{operation.back}" >返回</a>
+					</div>
+				</div>
+			</div> 
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-md-1">
+					<div class="am-btn-toolbar">
+						<div class="am-btn-group am-btn-group-xs">
+						<!-- 	<button type="button" th:href="@{~/server/add}"
+								class="am-btn am-btn-default am-btn-success list-add">
+								<span class="am-icon-plus" th:text="#{views.server.list.add}">新增</span> 
+							</button> -->
+							<!-- <button type="button"
+								class="am-btn am-btn-default am-btn-secondary">
+								<span class="am-icon-save"></span> 保存
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-warning">
+								<span class="am-icon-archive"></span> 审核
+							</button>
+							<button type="button" class="am-btn am-btn-default am-btn-danger">
+								<span class="am-icon-trash-o"></span> 删除
+							</button> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					<form class="am-form">
+						<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+							   <tr><td colspan="13" style="text-align: center;"  >
+							   <span th:text="#{Strategy}">策略: </span> <span th:text="${strategy.name}"></span>
+							   </td></tr>
+								<tr>
+									<!-- <th class="table-check"><input type="checkbox" />
+									</th> -->
+									<th class="table-id" th:text="#{views.server.list.NO}">编号</th>
+									<th class="table-title" th:text="#{views.server.list.name}">名称</th>
+									<th class="table-title" th:text="#{views.server.list.type}">类型</th>
+									<th class="table-type" th:text="#{views.server.list.domain}">服务器域</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.server.list.country}">国家</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.server.list.region}">地区</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.server.list.city}">市</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.server.list.isp}">运营商</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.server.list.status}">状态</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.server.list.priority}">优先级</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.server.list.maxCapacity}">最大承载</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.server.list.actualCapacity}">已承载</th>
+									<th class="table-set" th:text="#{views.strategy.search.operation}">操作</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="obj,iterStat:${pageList.getContent()}">
+								<!-- 	<td><input type="checkbox" /></td> -->
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${obj.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.type.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.domain}">default</td>
+									<td class="am-hide-sm-only" th:text="${obj.country}">国家</td>
+									<td class="am-hide-sm-only" th:text="${obj.region}">地区</td>
+									<td class="am-hide-sm-only" th:text="${obj.city}">市</td>
+									<td class="am-hide-sm-only" th:text="${obj.isp}">运营商</td>
+									<td class="am-hide-sm-only" th:text="${obj.status eq 1}?#{Start}:#{Stop}">状态</td>
+									<td class="am-hide-sm-only" th:text="${obj.priority}">优先级</td>
+									<!-- 									<td class="am-hide-sm-only" th:text="${@EStatus[obj.priority]}">优先级</td> -->
+									<td class="am-hide-sm-only" th:text="${obj.maxCapacity}">最大承载人数</td>
+									<td class="am-hide-sm-only" th:text="${obj.actualCapacity}">已承载人数</td>
+									<td>
+										<div class="am-btn-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<button th:href="@{'~/server/edit/'+${obj.id}(from='strategy',strategyId=${strategy.id},typeId=${typeId})}"
+													type="button"
+													class="am-btn am-btn-default am-btn-xs am-text-secondary list-edit">
+													<span class="am-icon-pencil-square-o" th:text="#{views.server.list.edit}" > 编辑</span> 
+												</button>
+												<!-- <button  type="button"
+													class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
+													<span class="am-icon-copy"></span> 复制
+												</button> -->
+												<button th:href="@{'~/server/del/'+${obj.id}}"
+													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only list-del">
+													<span class="am-icon-trash-o" th:text="#{views.server.list.del}"> 删除</span>
+												</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					<!-- 	<label th:text="${#request.queryString}" ></label> -->
+						<div
+							th:replace="layout/pagination::page(${pageList},${#request.requestURI})"></div>
+						<hr />
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</html>

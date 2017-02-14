@@ -1,0 +1,177 @@
+/**
+ * 
+ */
+package com.dz.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dz.entities.Authority;
+import com.dz.entities.Role;
+import com.dz.model.State;
+import com.dz.model.Tree;
+import com.dz.repository.AuthorityRepository;
+
+/**
+ * @author qilizhi
+ * 
+ */
+@Service
+@Transactional
+public class AuthorityService {
+
+	@Autowired
+	private AuthorityRepository authorityDao;
+
+//	@Autowired
+	//private ResourceDao resourceDao;
+
+	/**
+	 * 获取权限树
+	 * 
+	 */
+	
+	
+	public Authority getOne(Long id){
+		return authorityDao.getOne(id);
+		
+	}
+	
+	public Authority findByOne(Long id){
+		
+		return authorityDao.findOne(id);
+	}
+
+	public List<Tree> getTree(List<Authority> authList) {
+		List<Tree> auTrees = new ArrayList<Tree>();
+		for (Authority aut : authList) {
+			Tree AT = new Tree();
+			if (aut != null && aut.getId() != null) {
+				AT.setId(aut.getId());
+				AT.setText(aut.getName());
+				AT.setParentId(aut.getParent() == null ? null : aut
+						.getParent().getId());
+				List<Authority> auths =aut.getChildren();
+				if (!auths.isEmpty()) {
+					AT.setChildren(getTree(auths));
+				}
+				auTrees.add(AT);
+			}
+
+		}
+
+		return auTrees;
+	}
+
+	/**
+	 * 获取所有的根限树
+	 * 
+	 */
+
+	public List<Tree> getAllTree() {
+
+		List<Tree> ATs = new ArrayList<Tree>();
+		List<Authority> authoritys = authorityDao.findByParentIdIsNull();
+		if (authoritys != null && authoritys.size() > 0) {
+			ATs = getTree(authoritys);
+		}
+		return ATs;
+
+	}
+
+	/**
+	 * 标记已授权的树
+	 * 
+	 * 
+	 */
+
+	public List<Tree> tagTree(Role role, List<Tree> authorityTrees) {
+		List<Tree> ATs = new ArrayList<Tree>();
+		for (Tree at : authorityTrees) {
+			if (at != null) {
+				State st = new State();
+				st.setOpened(true);
+				for (Authority RT : role.getAuthorities()) {
+					if (RT != null && RT.getId() != null && at.getId() != null
+							&& RT.getId() == at.getId()) {
+						/* st.setSelected(true); */
+						if (at.getChildren() != null && at.getChildren().size() > 0) {
+							st.setChecked(false);
+						} else {
+							st.setChecked(true);
+						}
+
+						role.getAuthorities().remove(at);
+					}
+				}
+				at.setState(st);
+			}
+			if (at.getChildren() != null && at.getChildren().size() > 0) {
+				at.setChildren(tagTree(role, at.getChildren()));
+			}
+			ATs.add(at);
+		}
+
+		return ATs;
+	}
+	/**
+	 * 	递归排序
+	 * @param authorityTrees
+	 * @return
+	 */
+	public List<Authority> getTreeList(List<Authority> authorityTrees) {
+		List<Authority> ATs = new ArrayList<Authority>();
+		for (Authority at : authorityTrees) {
+			if(at!=null){
+			ATs.add(at);
+			if (at.getChildren() != null && at.getChildren().size() > 0) {
+				ATs.addAll(getTreeList(at.getChildren()));
+			}
+			}
+		
+		}
+
+		return ATs;
+	}
+
+	
+	/**
+	 * @param authority
+	 */
+	public Authority insertSelective(Authority authority) {
+		return authorityDao.saveOrUpdate(authority);
+	}
+
+	/**
+	 * @param auth
+	 */
+	public void updateByPrimaryKeySelective(Authority auth) {
+		authorityDao.saveOrUpdate(auth);
+
+	}
+
+	/**
+	 * @param id
+	 */
+	public void deleteByPrimaryKey(Long id) {
+		authorityDao.delete(id);
+
+	}
+
+	/**
+	 * @param authorityId
+	 * @param resourceIdsList
+	 */
+/*	public void updateBydelete(Long authorityId, List<Long> resourceIdsList) {
+		List<Resource> resources = new ArrayList<Resource>();
+		resources = resourceDao.findByIdIn(resourceIdsList);
+		Authority authority = authorityDao.findOne(authorityId);
+		authority.setResources(resources);
+		authorityDao.save(authority);
+	}*/
+
+}

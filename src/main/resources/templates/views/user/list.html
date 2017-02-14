@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+
+
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.user.list.systemManagement}"><!-- 用户管理列表 --></div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home"  th:text="#{views.user.list.userManagementList}"><!-- 系统管理 --></a></li>
+		<li th:text="#{views.user.list.list}"><!-- 用户管理 --></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-table" th:text="#{views.user.list.list}"> 列表</span>
+			</div>
+			<div class="tpl-portlet-input tpl-fz-ml">
+				<!-- <div class="portlet-input input-small input-inline">
+					<div class="input-icon right">
+						<i class="am-icon-search"></i> <input type="text"
+							class="form-control form-control-solid" placeholder="搜索..." />
+					</div>
+				</div> -->
+			</div>
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-md-6">
+					<div class="am-btn-toolbar" >
+						<div class="am-btn-group am-btn-group-xs">
+							<button th:if="${@permissionEV.hasAuth('/user/add')}"  type="button" th:href="@{~/user/add}"
+								class="am-btn am-btn-default am-btn-success list-add">
+								<span class="am-icon-plus" th:text="#{views.user.list.add}"> 新增</span>
+							</button>
+						<!-- 	<button type="button"
+								class="am-btn am-btn-default am-btn-secondary">
+								<span class="am-icon-save"></span> 保存
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-warning">
+								<span class="am-icon-archive"></span> 审核
+							</button>
+							<button type="button" class="am-btn am-btn-default am-btn-danger">
+								<span class="am-icon-trash-o"></span> 删除
+							</button> -->
+<!-- 						   <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        This will only be displayed if authenticated user has role ROLE_ADMIN.
+    </div> -->
+							<!-- <div th:text="${#authentication.name}">
+        The value of the "name" property of the authentication object should appear here.
+    </div> -->
+   <!--  <span th:text="${@permissionEV.hasAuth('user/add')}">username</span> -->
+   <!--  <div sec:authentication="POST /admin">
+        This will only be displayed if authenticated user can call the "/admin" URL
+        using the POST HTTP method.
+    </div> -->
+    
+						</div>
+					</div>
+				</div>
+				<div class="am-u-sm-12 am-u-md-3">
+					<div class="am-form-group">
+					
+					</div>
+				</div>
+				<div class="am-u-sm-12 am-u-md-3">
+				<form th:action="@{~/user/list}" th:method="post">
+					<div class="am-input-group am-input-group-sm">
+						<input type="text" name="username" class="am-form-field" th:value="${obj.username}" th:placeholder="#{views.user.list.userName}" /> <span
+							class="am-input-group-btn">
+							<button
+								class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+								type="submit" ></button>
+						</span>
+
+					</div>
+					</form>
+				</div>
+			</div>
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					<form class="am-form">
+						<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+								<tr>
+							<!-- 		<th class="table-check">
+									
+									<input type="checkbox"
+										 />
+									</th> -->
+									<th class="table-id" th:text="#{views.user.list.ID}">ID</th>
+									<th class="table-title" th:text="#{views.user.list.name}">称昵</th>
+									<th class="table-type" th:text="#{views.user.list.userName}">登录名</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.user.list.phone}">手机号码</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.user.list.email}">邮箱</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.user.list.createTime}">创建时间</th>
+									<th class="table-set" th:text="#{views.user.list.operation}">操作</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="user,iterStat:${pageList.getContent()}">
+								<!-- 	<td>
+									<input type="checkbox" />
+									</td> -->
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${user.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${user.username}"><!-- default --></td>
+									<td class="am-hide-sm-only" th:text="${user.phone}"><!-- 测试1号 --></td>
+									<td class="am-hide-sm-only" th:text="${user.email}"><!-- 测试1号 --></td>
+									<td class="am-hide-sm-only" th:text="${user.createTime}"><!-- 2014年9月4日7:28:47 --></td>
+									<td>
+										<div class="am-btn-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<button  th:if="${@permissionEV.hasAuth('/user/edit')}" th:href="@{'~/user/edit/'+${user.id}}" type="button"
+													class="am-btn am-btn-default am-btn-xs am-text-secondary list-edit">
+													<span class="am-icon-pencil-square-o" th:text="#{views.user.list.edit}">编辑</span> 
+												</button>
+												 <button  th:if="${@permissionEV.hasAuth('/user/auth')}" type="button" th:href="@{'~/user/auth/'+${user.id}}"
+													class="am-btn am-btn-default am-btn-xs am-text-success am-hide-sm-only list-edit">
+													<span class="am-icon-copy" th:text="#{views.user.list.authorization}">授权</span>
+												</button> 
+												 <button th:if="${@permissionEV.hasAuth('/user/password')}" th:href="@{'~/user/password/'+${user.id}}"  type="button"
+													class="am-btn am-btn-default am-btn-xs am-hide-sm-only list-edit">
+													<span class="am-icon-key" th:text="#{views.user.list.modifyPassword}">修改密码</span>
+												</button> 
+												<button th:if="${@permissionEV.hasAuth('/user/del/')}" th:href="@{'~/user/del/'+${user.id}}"
+													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only list-del">
+													<span class="am-icon-trash-o" th:text="#{views.user.list.del}"> 删除</span>
+												</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+						<div th:replace="layout/pagination::page(${pageList},${'~/user/list'})"></div>
+						<hr />
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+		<div class="tpl-alert"></div>
+	</div>
+</div>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+   	<script th:src="@{~/assets/js/jquery.min.js}"></script>
+   	<style type="text/css">
+   	li{word-break:break-all;}
+   	span{
+   	word-break:break-all;
+   	color: red;
+   	}
+   	</style>
+  </head>
+  <body>
+  <label>ip地址：</label>
+  <input type="text" name="ip" value="202.196.23.20" />
+  <label>策略类型：</label>
+  <input type="text" name="type" value="视频服务器策略" />
+    <input type="submit" name="提交" value="提交" />
+    <br>
+    <span>region_name(省名字),city_name(城市名),isp(运营商),country_name(国家名),country_code(国家代码),domain(域),type(服务器类型)，priority(优先级)，maxCapacity(最大承载)，actualCapacity(实际承载)，status(状态0停用，1启用)</span>
+    <br>
+    <label>ip地址信息</label>
+    <ul >
+    <li id="ipInfo"> </li>
+    </ul>
+    <label>匹配的服务器</label>
+    <ul id="servers">
+   
+    </ul>
+  </body>
+  <script type="text/javascript">
+  $(function(){
+	  $("input[type='submit']").on("click",function(e){
+		  var ip=$("input[name='ip']").val();
+		  var type=$("input[name='type']").val();
+		  $.get("/api/ipInfo?ip="+ip+"&type="+type,function(result){
+			  if(result.code=="success"){
+			  $("#ipInfo").text(JSON.stringify(result.data));
+			  }
+			 // console.log(data);
+		  });
+		  $.get("/api/strategy?ip="+ip+"&type="+type,function(result){
+			  var list="";
+		  	$("#servers").empty();
+		  	if(result.code=="success"){
+		  		
+			  $.each(result.data,function(index,d){
+				list+="<li>"+JSON.stringify(d)+"</li>";
+			  });
+			  $("#servers").append(list);
+		  	}
+			 // console.log(data);
+		  });
+	  });  
+  });
+  </script>
+</html>

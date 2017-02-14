@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<div class="am-cf" th:fragment="page(pagination,pageUrl)">
+	<!-- 传入分页的参数 -->
+	<!-- 	th:with="pagination=${pageList},pageUrl=${'~/user/list'}"> -->
+	<div class="am-fr">
+		<ul class="am-pagination tpl-pagination"
+			th:with="pagination=${pagination},pageUrl=${pageUrl},pEnd=${pagination.totalPages}>1?${pagination.totalPages-1}:0">
+			<li th:class="${pagination.isFirst()}?'am-disabled':''"><a
+				th:if="${not pagination.isFirst()}"
+				
+			th:href="'javascript:page('+${pagination.number-1}+','+${pagination.size}+')'"
+				>«</a>
+				<a th:if="${pagination.isFirst()}" href="javascript:void(0);">«</a></li>
+
+
+			<li  th:each="pageNo:${#numbers.sequence(pagination.number-5>0?pagination.number-5:0,(pagination.number+4)>pEnd?pEnd:(pagination.number+4))}"
+				th:class="${pagination.number eq pageNo}?'am-active':''"><a
+				th:if="${pagination.number eq pageNo}" href="javascript:void(0)"><span
+					th:text="${pageNo+1}">1</span></a> <a
+				th:if="${not (pagination.number eq pageNo)}"
+					th:href="'javascript:page('+${pageNo}+','+${pagination.size}+')'"><span
+					th:text="${pageNo+1}">1</span></a></li>
+			<!-- <li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li> -->
+			<li th:class="${pagination.isLast()}?'am-disabled':''"><a
+				th:if="${pagination.isLast()}" href="javascript:void(0);">»</a> <a
+				th:if="${not pagination.isLast()}"
+				th:href="'javascript:page('+${pagination.number+1}+','+${pagination.size}+')'"
+				>»</a>
+
+			</li>
+		</ul>
+	</div>
+</div>
+
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title th:text="#{views.startegy.list.title}">策略管理</title>
+</head>
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.startegy.list.strategyManagementList}">策略管理列表</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.startegy.list.strategyManagement}">策略管理</a></li>
+		<li><a th:href="@{~/strategy/list}" th:text="#{views.startegy.list.strategyManagementList}">策略管理列表</a></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-table" th:text="#{views.startegy.list.list}"> 列表</span>
+			</div>
+			 <div class="tpl-portlet-input tpl-fz-ml">
+				<div class="portlet-input input-small input-inline">
+					<div class="right">
+						<a th:href="@{~/strategyType/list}" th:text="#{operation.back}">返回</a>
+					</div>
+				</div>
+			</div> 
+			<!-- <div class="tpl-portlet-input tpl-fz-ml">
+				<div class="portlet-input input-small input-inline">
+					<div class="input-icon right">
+						<i class="am-icon-search"></i> <input type="text"
+							class="form-control form-control-solid" placeholder="搜索..." />
+					</div>
+				</div>
+			</div> -->
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g">
+				<div class="am-u-sm-1">
+					<div class="am-btn-toolbar">
+						<div class="am-btn-group am-btn-group-xs">
+						<!-- 	<button type="button" th:href="@{~/strategy/add}"
+								class="am-btn am-btn-default am-btn-success list-add">
+								<span class="am-icon-plus" th:text="#{views.startegy.list.add}" >新增</span> 
+							</button> -->
+							<!-- <button type="button"
+								class="am-btn am-btn-default am-btn-secondary">
+								<span class="am-icon-save"></span> 保存
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-warning">
+								<span class="am-icon-archive"></span> 审核
+							</button>
+							<button type="button" class="am-btn am-btn-default am-btn-danger">
+								<span class="am-icon-trash-o"></span> 删除
+							</button> -->
+						</div>
+					</div>
+				</div>
+				<form th:action="@{~/strategy/list}" th:method="post" id="searchForm">
+						<div class="am-u-sm-2">
+							<span th:text="#{Country}">国</span>
+							<select name="country.name"  th:value="${strategy.country}==null?'':${strategy.country.name}"
+								th:action="@{~/area/country}"
+								class="chosen-select selectCountry" th:attr="data-placeholder=#{operation.pleaseSelect}">
+							<!-- 	<option >请选择</option> -->
+							<option th:if="${strategy.country}" th:value="*{name}" th:id="*{id}"
+										th:text="*{name}" selected="selected"></option>
+							</select>
+						
+					</div>
+					<div class="am-u-sm-2">
+							<span th:text="#{Region}">省</span>
+							<select name="region.name" th:value="${strategy.region}==null?'':${strategy.region.name}"
+								th:action="@{~/area/region}" class="chosen-select selectRegion"
+								th:attr="data-placeholder=#{operation.pleaseSelect}">
+							<!-- 	<option >请选择</option> -->
+								<option th:if="${strategy.region}" th:value="*{name}" th:id="*{id}"
+										th:text="*{name}" selected="selected"></option>
+							</select>
+					</div>
+					<div class="am-u-sm-2">
+							<span th:text="#{City}">市</span>
+							<select name="city.name" th:value="${strategy.city}==null?'':${strategy.city.name}"
+								th:action="@{~/area/city}" class="chosen-select selectCity"
+								th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<!-- <option >请选择</option> -->
+								<option th:if="${strategy.city}" th:value="*{name}" th:id="*{id}"
+										th:text="*{name}" selected="selected"></option>
+							</select>
+					</div>
+					<div class="am-u-sm-2">
+						<span th:text="#{Isp}">运营商</span>
+						<!-- 	<select name="isps.id" th:value="${strategy.isp.name}"
+								th:action="@{~/area/isp}" class="chosen-select selectIsp"
+								th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<option value="" th:text="#{views.server.list.selectAll}">全选</option>
+								<option th:value="${strategy.isp.id}" th:text="${strategy.isp.name}"
+									selected="selected"></option>
+							</select> -->
+								<select  name="ispName" th:action="@{~/area/isp}" th:value="${ispName}"
+									class="chosen-select selectIsp"  th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<!-- <option th:each="isp:${obj.isps}" th:value="${isp.name}"
+										th:id="${isp.id}" th:text="${isp.name}" selected="selected"></option> -->
+								</select>
+					</div>
+					<!-- <div class="am-u-sm-2">
+						<span>类型</span>
+							<select th:field="${strategy.type.id}" name="type.id"
+								class="chosen-select" th:attr="data-placeholder=#{operation.pleaseSelect}" >
+								<option value="" th:text="#{views.startegy.list.pleaseSelect}" >请选择</option>
+								<option th:each="type:${EType}" th:text="${type.name}"
+									th:value="${type.id}">所有类别</option>
+							</select>
+					</div> -->
+					<input type="hidden" name="type.id" th:value="${strategy.type}==null?'':${strategy.type.id}">
+					<input type="hidden" name="page" >
+					<input type="hidden" name="size" >
+					<div class="am-u-sm-2">
+					
+						<span th:text="#{Status}">状态</span>
+							<select th:field="${strategy.status}" name="status"
+								class="chosen-select" >
+								<option  value="" th:text="#{All}" >全选</option>
+								<option value="1" th:text="#{Start}">启用</option>
+								<option value="0" th:text="#{Stop}">停用</option>
+							</select>
+					
+					</div>
+					<div class="am-u-sm-1">
+						<div class="am-input-group am-input-group-sm">
+						
+							<input  type="submit" th:value="#{Select}">
+							<!-- <input type="text" class="am-form-field" name="name" th:value="${strategy.name}" /> <span
+								class="am-input-group-btn">
+								<button
+									class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+									type="submit"></button>
+							</span> -->
+
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					<!-- <form class="am-form"> -->
+						<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+								<tr>
+									<!-- <th class="table-check"><input type="checkbox" />
+									</th> -->
+									<th class="table-id" th:text="#{views.startegy.list.NO}">编号</th>
+									<th class="table-title" th:text="#{views.startegy.list.name}">名称</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.startegy.list.description}">说明</th>
+									<th class="table-title" th:text="#{views.startegy.list.type}">类型</th>
+									<th class="table-type" th:text="#{views.startegy.list.serverNum}" > 服务器数量</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.startegy.list.country}">国家</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.startegy.list.region}">地区</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.startegy.list.city}">市</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.startegy.list.isp}">运营商</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.startegy.list.status}">状态</th>
+								
+									<th class="table-set" th:text="#{views.startegy.list.operation}">操作</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="obj,iterStat:${pageList.getContent()}">
+								<!-- 	<td><input type="checkbox" /></td> -->
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${obj.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.description}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.type.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td  ><a  th:href="@{~/strategy/serverList(typeId=${obj.type.id},strategyId=${obj.id})}" th:text="${obj.servers.size()}" ><!-- 服务器数量 --></a></td>
+									<td class="am-hide-sm-only" th:text="${obj.country.name}"><!-- 国家 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.region}?${obj.region.name}:_"><!-- 地区 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.city}?${obj.city.name}:_"><!-- 市 --></td>
+									<td class="am-hide-sm-only" >	<p th:each="isp:${obj.isps}" th:text="${isp.name}"> <!-- 运营商 --></p>
+									
+									</td>
+									<td class="am-hide-sm-only" th:text="${obj.status==1}?#{Start}:#{Stop}"><!-- 状态 --></td>
+									<!-- 									<td class="am-hide-sm-only" th:text="${@EStatus[obj.priority]}">优先级</td> -->
+									<td>
+										<div class="am-btn-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<button  th:if="${@permissionEV.hasAuth('/strategy/edit')}"
+												 th:href="@{'~/strategy/edit/'+${obj.id}}"
+													type="button"
+													class="am-btn am-btn-default am-btn-xs am-text-secondary list-edit">
+													<span class="am-icon-pencil-square-o" th:text="#{views.startegy.list.edit}" > 编辑</span> 
+												</button>
+												<!-- <button  type="button"
+													class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
+													<span class="am-icon-copy"></span> 复制
+												</button> -->
+												<div th:if="${@permissionEV.hasAuth('/strategy/del')}">
+												<button  
+												th:if="${obj.isDefault ne 1}" th:href="@{'~/strategy/del/'+${obj.id}}"
+													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only list-del">
+													<span  class="am-icon-trash-o" th:text="#{views.startegy.list.del}"> 删除</span> 
+												</button>
+												<label th:if="${obj.isDefault eq 1}" th:href="@{'~/strategy/del/'+${obj.id}}"
+													class="am-btn am-btn-default  am-text-danger">
+													<span   th:text="#{views.startegy.list.default}">默认策略</span> 
+												</label>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					 	<div
+							th:replace="layout/paginationjs::page(${pageList},${'~/strategy/list'})"></div>
+	
+						<hr/>
+<!-- 
+					</form> -->
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+function page(page,size){
+	$("input[name='page']").val(page);
+	$("input[name='size']").val(size);
+	$("#searchForm").submit();
+	/* 
+	var url=$("#searchForm").attr("action")+"?page="+page+"&size="+size; */
+	
+}
+
+</script>
+</html>

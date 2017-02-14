@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="widget am-cf">
+                    <div class="widget-body">
+                        <div class="tpl-page-state">
+                            <div class="tpl-page-state-title am-text-center tpl-error-title">没有权限</div>
+                            <div class="tpl-error-title-info">没有权限访问</div>
+                            <div class="tpl-page-state-content tpl-error-content">
+
+                                <p th:text="${msg}"></p>
+                                <button type="button" class="am-btn am-btn-secondary am-radius tpl-error-btn">返回</button></div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+   
+</html>

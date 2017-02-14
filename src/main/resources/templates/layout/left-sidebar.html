@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<div class="tpl-left-nav tpl-left-nav-hover">
+	<!-- <div class="tpl-left-nav-title" th:text="#{layout.left-sidebar.list}">导航列表</div> -->
+	<div class="tpl-left-nav-list">
+		<ul class="tpl-left-nav-menu">
+			 <li class="tpl-left-nav-item"><a th:href="@{~/index}"
+				class="nav-link"> <i class="am-icon-home"></i> <span th:text="#{layout.left-sidebar.homePage}">首页</span>
+			</a></li>
+			<!-- 		<li class="tpl-left-nav-item"><a th:href="@{~/user/list}" 
+				class="nav-link tpl-left-nav-link-list" th:class="${_userActive}"> <i
+					class="am-icon-bar-chart"></i> <span>用户</span> <i
+					class="tpl-left-nav-content tpl-badge-danger"> 12 </i>
+			</a></li> -->
+
+			<li class="tpl-left-nav-item"><a href="javascript:;"
+				th:class="'nav-link tpl-left-nav-link-list '"> <i
+					class="am-icon-table"></i> <span th:text="#{layout.left-sidebar.systemManagement}">系统管理</span> <i
+					th:class="'am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate '+${_userOpen}"></i>
+			</a>
+				<ul class="tpl-left-nav-sub-menu" style="display:block;" >
+					<li>
+					<a th:if="${@permissionEV.hasAuth('/user/list')}"
+					th:href="@{~/user/list}" th:class="${_userSecondMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.userManagement}">用户管理</span>
+					<!-- 		 <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a>  
+					<a th:if="${@permissionEV.hasAuth('/role/list')}"
+					th:href="@{~/role/list}" th:class="${_roleSecondMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.roleManagement}">角色管理</span> 
+				<!-- 			<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a>  
+					<a th:if="${@permissionEV.hasAuth('/authority/list')}"
+					th:href="@{~/authority/list}" th:class="${_authoritySecondMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.authorityManagement}">权限管理</span>
+							<!--  <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a>  
+					<a th:if="${@permissionEV.hasAuth('/area/edit')}"
+					 th:href="@{~/area/edit}" th:class="${_areaSecondMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.regionManagement}" >区域管理</span> </a> 
+					<a th:if="${@permissionEV.hasAuth('/operation/list')}"
+					th:href="@{~/operation/list}" th:class="${_operationSecondMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.operateLog}">操作日志</span> </a> 
+							
+							</li>
+					
+				</ul></li>
+
+		 <li class="tpl-left-nav-item"><a href="javascript:;"
+				th:class="'nav-link tpl-left-nav-link-list ' " > <i
+					class="am-icon-wpforms"></i> <span th:text="#{layout.left-sidebar.serverManagement}" >服务器管理</span> <i
+					th:class="'am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate ' +${_serverOpen}"></i>
+			</a>
+				<ul class="tpl-left-nav-sub-menu" style="display: block;">
+					<li>
+					<a  th:if="${@permissionEV.hasAuth('/serverType/list')}"
+					th:href="@{~/serverType/list}" th:class="${_serverTypeMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.serverOverview}">服务器总览</span>
+							<!--  <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a> 
+					<a  th:if="${@permissionEV.hasAuth('/server/add')}"
+					 th:href="@{~/server/add}" th:class="${_serverMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.serverAdd}">服务器新增</span> 
+							<!-- <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a> 
+					<!-- <a href="form-line.html"> <i class="am-icon-angle-right"></i>
+							<span>线条表单</span>
+					</a> -->
+					</li>
+				</ul></li>
+			 <li class="tpl-left-nav-item"><a href="javascript:;"
+				th:class="'nav-link tpl-left-nav-link-list ' " > <i
+					class="am-icon-wpforms"></i> <span th:text="#{layout.left-sidebar.strategyManagement}">策略管理</span> <i
+					th:class="'am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate ' +${_strategyOpen}"></i>
+			</a>
+				<ul class="tpl-left-nav-sub-menu" style="display: block;">
+					<li>
+					<a  th:if="${@permissionEV.hasAuth('/strategyType/list')}"
+					th:href="@{~/strategyType/list}" th:class="${_strategyTypeMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.strategyOverview}">策略总览</span>
+							<!--  <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a> 
+					<a  th:if="${@permissionEV.hasAuth('/strategy/add')}"
+					th:href="@{~/strategy/add}" th:class="${_strategyMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.strategyAdd}">策略列表</span>
+							<!--  <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a> 
+					<!-- <a href="form-line.html"> <i class="am-icon-angle-right"></i>
+							<span>线条表单</span>
+					</a> -->
+					</li>
+				</ul></li>
+				 <li class="tpl-left-nav-item"><a href="javascript:;"
+				th:class="'nav-link tpl-left-nav-link-list ' " > <i
+					class="am-icon-wpforms"></i> <span th:text="#{layout.left-sidebar.search}">搜索</span> <i
+					th:class="'am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate ' +${_searchOpen}"></i>
+			</a>
+				<ul class="tpl-left-nav-sub-menu" style="display: block;">
+					<li>
+					<a  th:if="${@permissionEV.hasAuth('/search/index')}"
+					th:href="@{~/search/index}" th:class="${_searchMenus}" > <i
+							class="am-icon-angle-right"></i> <span th:text="#{layout.left-sidebar.conditionSearch}">条件搜索</span>
+						<!-- 	 <i	class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i> -->
+					</a> 
+					<!-- <a href="form-line.html"> <i class="am-icon-angle-right"></i>
+							<span>线条表单</span>
+					</a> -->
+					</li>
+				</ul></li>
+			<!-- <li class="tpl-left-nav-item"><a href="login.html"
+				class="nav-link tpl-left-nav-link-list"> <i class="am-icon-key"></i>
+					<span>登录</span>
+
+			</a></li> -->
+		</ul>
+	</div>
+</div>
+
+<!-- 
+<div class="left-sidebar">
+	用户信息
+
+
+	菜单
+	<ul class="sidebar-nav">
+		<li class="sidebar-nav-heading">Components <span
+			class="sidebar-nav-heading-info"> 附加组件</span></li>
+		<li class="sidebar-nav-link"><a href="index.html"
+			th:class="${first}"> <i
+				class="am-icon-home sidebar-nav-link-logo"></i> 首页
+		</a></li>
+		<li class="sidebar-nav-link"><a th:href="@{~/user/list}"
+			th:class="${_userActive}"> <i
+				class="am-icon-user sidebar-nav-link-logo"></i>用户
+		</a></li>
+
+
+	</ul>
+</div> -->
+</html>

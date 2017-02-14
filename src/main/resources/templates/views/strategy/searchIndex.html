@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title th:text="#{views.strategy.search.title}">策略管理搜索</title>
+</head>
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title"
+		th:text="#{views.strategy.search.conditionSearch}">条件搜索</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home"
+			th:text="#{views.strategy.search.search}">搜索</a></li>
+		<li><a th:href="@{~/search/list}"
+			th:text="#{views.strategy.search.conditionSearch}">条件搜索</a></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-search"
+					th:text="#{views.strategy.search.search}">搜索</span>
+				<span	style="display: inline-block; color: red; font-size: 13px;" th:text="#{views.strategy.search.tip}" >
+				(支持"服务器ip/域名" 、"地区"、"运营商 "、"状态" 4个条件的模糊搜索，可根据条件搜索对比.)</span>
+			</div>
+			
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g" style="margin-left: 30%;">
+				<!-- <div class="font-green">
+				<span class="am-icon-search" th:text="#{views.strategy.search.search}">搜索</span>
+			</div> -->
+				<div class="">
+					<form th:action="@{~/search/list}">
+						<div class="input-middle">
+							<!-- <div class="input-icon right">
+						<i class="am-icon-search"></i> <input type="text"
+							class="form-control form-control-solid" placeholder="搜索..." />
+						
+					</div> -->
+							<div class="am-input-group am-input-group-sm am-u-end">
+								<input type="text" class="am-form-field" name="searchString"
+									th:value="${searchString}" placeholder="服务器/地区/运营商/状态"
+									th:placeholder="#{views.strategy.search.searchString}" /> <span
+									class="am-input-group-btn">
+									<button
+										class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+										type="submit"></button>
+								</span>
+
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$(".more").on(
+				"click",
+				function(e) {
+					$(this).toggleClass("am-icon-minus");
+					$(this).toggleClass("am-icon-plus");
+					if ($(this).hasClass("am-icon-minus")) {
+						$(this).parent().parent().next().children("td").css(
+								"display", "");
+					}
+					if ($(this).hasClass("am-icon-plus")) {
+						$(this).parent().parent().next().children("td").css(
+								"display", "none");
+					}
+
+				});
+
+	});
+</script>
+</html>

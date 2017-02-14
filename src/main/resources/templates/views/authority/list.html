@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{views.authority.list.authorityManagement}">权限管理</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{~/assets/css/jquery.treegrid.css}">
+<!-- <link rel="stylesheet" type="text/css"
+	th:href="@{~/assets/css/easyui.css}"> -->
+<!-- <link rel="stylesheet" type="text/css"
+	th:href="@{~/assets/css/icon.css}"> -->
+<!-- <link rel="stylesheet" type="text/css"
+	th:href="@{~/assets/css/tree.css}"> -->
+
+</head>
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.authority.list.authorityManagement}">权限管理</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.authority.list.authorityManagement}" >权限管理</a></li>
+		<li th:text="#{views.authority.list.authorityList}">权限列表<!-- <a th:href="@{~/server/overview}" ></a> --></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-table" th:text="#{views.authority.list.list}">列表</span>
+			</div>
+			<!-- 	<div class="tpl-portlet-input tpl-fz-ml">
+				<div class="portlet-input input-small input-inline">
+					<div class="input-icon right">
+						<i class="am-icon-search"></i> <input type="text"
+							class="form-control form-control-solid" placeholder="搜索..." />
+					</div>
+				</div>
+			</div> -->
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-md-6">
+					<div class="am-btn-toolbar">
+						<div class="am-btn-group am-btn-group-xs">
+							<button type="button" th:href="@{~/serverType/saveOrUpdate}"
+								class="am-btn am-btn-default am-btn-success _list-add">
+								<span class="am-icon-plus" th:text="#{views.authority.list.add}"> 新增</span>
+							</button>
+							<!-- 	<button type="button"
+								class="am-btn am-btn-default am-btn-secondary">
+								<span class="am-icon-save"></span> 保存
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-warning">
+								<span class="am-icon-archive"></span> 审核
+							</button>
+							<button type="button" class="am-btn am-btn-default am-btn-danger">
+								<span class="am-icon-trash-o"></span> 删除
+							</button> -->
+						</div>
+					</div>
+				</div>
+				<!-- 	<div class="am-u-sm-12 am-u-md-3">
+					<div class="am-form-group">
+						<select data-am-selected="{btnSize: 'sm'}">
+							<option value="option1">所有类别</option>
+							<option value="option2">IT业界</option>
+							<option value="option3">数码产品</option>
+							<option value="option3">笔记本电脑</option>
+							<option value="option3">平板电脑</option>
+							<option value="option3">只能手机</option>
+							<option value="option3">超极本</option>
+						</select>
+					</div> -->
+			</div>
+			<!-- 		<div class="am-u-sm-12 am-u-md-3">
+					<div class="am-input-group am-input-group-sm">
+						<input type="text" class="am-form-field" /> <span
+							class="am-input-group-btn">
+							<button
+								class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+								type="button"></button>
+						</span>
+
+					</div>
+				</div> -->
+		</div>
+		<div class="am-g">
+			<div class="am-u-sm-12">
+				<form class="am-form">
+					<table class="am-table am-table-striped am-table-hover table-main tree">
+						<thead>
+							<tr>
+								<!--  <th class="table-check">
+									<input type="checkbox" />
+									</th>  -->
+								<th th:text="#{views.authority.list.ID}" >ID</th>
+								<th  th:text="#{views.authority.list.name}">名字</th>
+								<th th:text="#{views.authority.list.uri}" >URI</th>
+								<th th:text="#{views.authority.list.description}">描述</th>
+								<th th:text="#{views.authority.list.operate}" >操作</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="obj,iterStat:${pageList}"  th:attrappend="class=${' ' + 'treegrid-'+obj.id+' treegrid-parent-'+((obj.parent eq null)?'':obj.parent.id)}">
+							<!--  <td>
+									<input type="checkbox" />
+									</td>  -->
+								<td th:text="${obj.id}"></td>
+								<td th:text="${obj.name}">
+									<!-- <a href="#">Business management</a> -->
+								</td>
+								<td th:text="${obj.uri}">
+									<!-- <a href="#">Business management</a> -->
+								</td>
+								<td th:text="${obj.description}">
+									<!-- <a href="#">Business management</a> -->
+								</td>
+
+								<td>
+									<div class="am-btn-toolbar">
+										<div class="am-btn-group am-btn-group-xs">
+											<button th:name="${obj.name}" th:id="${obj.id}" th:attr="parentId=${obj.parent}?${obj.parent.id},uri=${obj.uri},name=${obj.name},description=${obj.description}"
+												th:href="@{~/authority/saveOrUpdate}" type="button"
+												class="am-btn am-btn-default am-btn-xs am-text-secondary _list-edit">
+												<span class="am-icon-pencil-square-o"
+													th:text="#{views.authority.list.edit}"> 编辑</span>
+											</button>
+												<button  type="button" th:id="${obj.id}" th:attr="parentId=${obj.parent}?${obj.parent.id},uri=${obj.uri},name=${obj.name},description=${obj.description}"
+												th:href="@{~/authority/saveOrUpdate}"
+													class="am-btn am-btn-default am-btn-xs am-hide-sm-only _list-AddChild">
+													<span class="am-icon-copy" th:text="#{views.authority.list.addChildren}" >新增子权限</span> 
+												</button> 
+											<button th:href="@{'~/authority/del/'+${obj.id}}"
+												class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only list-del">
+												<span class="am-icon-trash-o"
+													th:text="#{views.authority.list.del}"> 删除</span>
+											</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+					<!-- <div
+						th:replace="layout/pagination::page(${pageList},${'~/authority/list'})"></div> -->
+					<hr />
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<div class="am-modal" tabindex="-1" id="my-prompt">
+		<div class="am-modal-dialog">
+			<div class="am-modal-hd" th:text="#{views.authority.list.form}">表单</div>
+			<div class="am-modal-bd">
+				<div class="am-g tpl-amazeui-form"> 
+				<form th:action="@{~/authority/saveOrUpdate}">
+					<div class="am-g am-g-fixed">
+						<div class="am-form-group" style="display: table-row;">
+							<label  class="am-u-sm-5 am-form-label" th:text="#{views.authority.list.name}">权限名字:
+							</label>
+							<div class="am-u-sm-7 am-u-end">
+								<input type="hidden" value="" name="id" />
+								<input type="hidden" value="" name="parent.id"/>
+								 <input type="text"
+									name="name" placeholder="权限名字/auhtoriytName" />
+							</div>
+						</div>
+						<div class="am-form-group" style="display: table-row;">
+							<label  class="am-u-sm-5 am-form-label" th:text="#{views.authority.list.uri}">URI:
+							</label>
+							<div class="am-u-sm-7 am-u-end">
+								<input type="text"  name="uri"	placeholder="权限 /auhtority URI eg:/user/list " />
+							</div>
+						</div>
+						<div class="am-form-group " style="display: table-row;">
+							<label  class="am-u-sm-5 am-form-label" th:text="#{views.authority.list.description}">描述:
+							</label>
+							<div class="am-u-sm-7 am-u-end">
+								<input type="text"  name="description"
+									placeholder="描述/description" />
+							</div>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div class="am-modal-footer">
+				<span class="am-modal-btn" data-am-modal-cancel=""
+					th:text="#{views.authority.list.cancel}">取消</span> <span
+					class="am-modal-btn" data-am-modal-confirm=""
+					th:text="#{views.authority.list.submit}">提交</span>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 	   <table class="tree">  
+    <tr class="treegrid-1">  
+        <td>Root node</td><td>Additional info</td>  
+    </tr>  
+    <tr class="treegrid-2 treegrid-parent-1">  
+        <td>Node 1-1</td><td>Additional info</td>  
+    </tr>  
+    <tr class="treegrid-3 treegrid-parent-1">  
+        <td>Node 1-2</td><td>Additional info</td>  
+    </tr>  
+    <tr class="treegrid-4 treegrid-parent-3">  
+        <td>Node 1-2-1</td><td>Additional info</td>  
+    </tr>  
+    <tr class="treegrid-5 treegrid-parent-1">  
+        <td>Node 5</td><td>Additional info5</td>  
+    </tr>  
+</table>  --> 
+
+<!-- <table title="Folder Browser" class="easyui-treegrid" style="width:700px;height:250px"
+			data-options="
+				url: '/authority/treeGrid',
+				lines: true,
+				method: 'get',
+				rownumbers: true,
+				idField: 'id',
+				treeField: 'name'
+			">
+		<thead>
+			<tr>
+				<th data-options="field:'name'" width="220">Name</th>
+				<th data-options="field:'uri'" width="100" align="right">Size</th>
+				<th data-options="field:'description'" width="150">Modified Date</th>
+			</tr>
+		</thead>
+	</table> -->
+
+<!-- 	<script type="text/javascript"
+		th:src="@{~/assets/js/jquery.easyui.min.js}"></script> -->
+<!-- 	<script type="text/javascript"
+		th:src="@{~/assets/js/jquery.treegrid.bootstrap3.js}"></script> -->
+	<script type="text/javascript"
+		th:src="@{~/assets/js/jquery.treegrid.js}"></script>
+	
+		
+	<script th:inline="javascript">
+	/* <[[ */
+	   
+	$(function(){
+	$(".tree").treegrid();
+	});
+		var listAdd = $("._list-add");
+		var listEdit= $("._list-edit");
+		var listAddChildren= $("._list-AddChild");
+		var modalO = $("#my-prompt");
+		var form=$("#my-prompt form");
+		listAdd.on("click", function() {
+			modalO.find(".am-modal-hd").text([[#{views.authority.list.add}]]);
+			modalO.modal({
+				relatedTarget : this,
+				onConfirm : function(e) {
+				//	var submitData = form.serialize();
+					//console.log(submitData);
+					//	var url = $(this).attr("href");
+			var id =form.find("input[name='id']").val();
+			//var parentId=$(this).attr("parentId");
+			var uri=form.find("input[name='uri']").val();
+			var name=form.find("input[name='name']").val();
+			var description=form.find("input[name='description']").val();
+					var url = form.attr("action");
+					$.post(url, {
+						"id":id,
+						"uri":uri,
+						"name":name,
+						"description":description
+					}, function(result) {
+						if (result.code == "success") {
+							// $this.alert("提示","删除操作成功");
+							setTimeout(function() {
+								window.location.href = window.location.href;
+							}, 1000);
+						} else if (result.code == "fail") {
+							comm.alert([[#{operation.failMsg}]]+result.msg);
+						}
+						form[0].reset();
+					});
+				},
+				onCancel : function(e) {
+					//console.log(e);
+					form[0].reset();
+				}
+			});
+		});
+		listEdit.on("click", function(e) {
+			modalO.find(".am-modal-hd").text([[#{operation.edit}]]);
+			var url = $(this).attr("href");
+			var id = $(this).attr("id");
+			var parentId=$(this).attr("parentId");
+			var uri=$(this).attr("uri");
+			var name=$(this).attr("name");
+			var description=$(this).attr("description");
+			modalO.find("input[name='id']").val(id);
+			modalO.find("input[name='parent.id']").val(parentId);
+			modalO.find("input[name='uri']").val(uri);
+			modalO.find("input[name='name']").val(name);
+			modalO.find("input[name='description']").val(description);
+			modalO.modal({
+				relatedTarget : this,
+				onConfirm : function(e) {
+					//var submitData = form.serialize();
+					var submitData=new Object();
+				
+					var id =form.find("input[name='id']").val();
+					var parentId=form.find("input[name='parent.id']").val();
+					var uri=form.find("input[name='uri']").val();
+					var name=form.find("input[name='name']").val();
+					var description=form.find("input[name='description']").val();
+					submitData.id=id;
+					submitData.uri=uri;
+					submitData.name=name;
+					submitData.description=description;
+					if(parentId){
+						submitData.parent=new Object();
+						submitData["parent.id"]=parentId;
+					}
+					$.post(url,submitData, function(result) {
+						if (result.code == "success") {
+							setTimeout(function() {
+								window.location.href = window.location.href;
+							}, 1000);
+						} else if (result.code == "fail") {
+							comm.alert([[#{operation.failMsg}]]);
+						}
+						form[0].reset();
+					});
+				},
+				onCancel : function(e) {
+					//console.log(e);
+					form[0].reset();
+				}
+			});
+		});
+		listAddChildren.on("click", function(e) {
+			modalO.find(".am-modal-hd").text([[#{views.authority.list.addChildren}]]);
+			var url = $(this).attr("href");
+			var id = $(this).attr("id");
+			//var parentId=$(this).attr("parentId");
+			//var uri=$(this).attr("uri");
+			//var name=$(this).attr("name");
+		//	var description=$(this).attr("description");
+			//modalO.find("input[name='id']").val(id);
+			modalO.find("input[name='parent.id']").val(id);
+			//modalO.find("input[name='uri']").val(uri);
+			//modalO.find("input[name='name']").val(name);
+			//modalO.find("input[name='description']").val(description);
+			modalO.modal({
+				relatedTarget : this,
+				onConfirm : function(e) {
+					//var submitData = form.serialize();
+					var submitData=new Object();
+				
+					//var id =form.find("input[name='id']").val();
+					var parentId=form.find("input[name='parent.id']").val();
+					var uri=form.find("input[name='uri']").val();
+					var name=form.find("input[name='name']").val();
+					var description=form.find("input[name='description']").val();
+					//submitData.id=id;
+					submitData.uri=uri;
+					submitData.name=name;
+					submitData.description=description;
+					if(parentId){
+						submitData.parent=new Object();
+						submitData["parent.id"]=parentId;
+					}
+					$.post(url,submitData, function(result) {
+						if (result.code == "success") {
+							setTimeout(function() {
+								window.location.href = window.location.href;
+							}, 1000);
+						} else if (result.code == "fail") {
+							comm.alert([[#{operation.failMsg}]]);
+						}
+						form[0].reset();
+					});
+				},
+				onCancel : function(e) {
+					//console.log(e);
+					form[0].reset();
+				}
+			});
+		});
+		/* ]]> */
+	</script>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.server.form.serverEdit}">服务器编辑</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home"th:text="#{views.server.form.serverManagement}" >服务器管理</a></li>
+		<li><a href="#" th:text="#{views.server.form.serverAdd}">服务器管理</a></li>
+		<li class="am-active" th:text="#{views.server.form.form}">表单</li>
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-form"></span><span th:text="${title}"></span>
+			</div>
+			<!--     <div class="tpl-portlet-input tpl-fz-ml">
+                        <div class="portlet-input input-small input-inline">
+                            <div class="input-icon right">
+                                <i class="am-icon-search"></i>
+                                <input type="text" class="form-control form-control-solid" placeholder="搜索..."> </div>
+                        </div>
+                    </div> -->
+
+
+		</div>
+		<div class="tpl-block ">
+
+			<div class="am-g tpl-amazeui-form">
+
+
+				<div class="am-u-sm-12 am-u-md-9">
+					<form class="am-form am-form-horizontal"
+						th:action="@{~/server/saveOrUpdate}" method="post" id="serverForm">
+						<input name="id" type="hidden" th:value="${obj.id}" />
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.serverName}">服务器名称</label>
+							<div class="am-u-sm-9">
+								<input type="text" name="name" th:value="${obj.name}"
+									placeholder="昵称 / Name" required="required" />
+								<!-- <small>输入你的名字，让我们记住你。</small> -->
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.serverDomain}">服务器ip/域</label>
+							<div class="am-u-sm-9">
+								<input type="text" id="user-name" name="domain"
+									th:value="${obj.domain}" placeholder="服务器ip/域" required="required" />
+								<!-- <small>输入你的名字，让我们记住你。</small> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-email" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.serverType}" >类型
+							</label>
+							<div class="am-u-sm-3 am-u-end">
+								<select name="type.id" th:value="${obj.type!=null?obj.type.id:''}"  class="chosen-select" id="selectInit" th:action="@{~/serverType/listAll}" th:attr="data-placeholder=#{operation.pleaseSelect}" >
+									</select>
+								<!--   <small>邮箱你懂得...</small> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.country}">国家
+							</label>
+							<div class="am-u-sm-3 am-u-end">
+								<select name="country" th:value="${obj.country}" th:action="@{~/area/country}" class="chosen-select selectCountry" th:attr="data-placeholder=#{operation.pleaseSelect}" required >
+									<option  value=""></option>
+										<option th:id="${obj.id}" th:value="${obj.country}" th:text="${obj.country}" selected="selected"></option>
+								</select>
+								<!-- <input type="tel" id="user-phone" name="country" th:value="${obj.country}" placeholder="输入你的国家/country"/> -->
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.region}">省</label>
+							<div class="am-u-sm-6 am-u-end">
+							<select name="region" th:value="${obj.region}" th:action="@{~/area/region}" class="chosen-select selectRegion"  th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option th:id="${obj.id}" th:value="${obj.region}" th:text="${obj.region}" selected="selected"></option>
+								</select>
+							
+								<!-- <input type="tel" id="user-phone" name="regoin"
+									th:value="${obj.region}" placeholder="输入你的区域/regoin" /> -->
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.city}">市
+							</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select name="city" th:value="${obj.city}" th:action="@{~/area/city}" class="chosen-select selectCity"  th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<option th:id="${obj.id}" th:value="${obj.city}" th:text="${obj.city}" selected="selected"></option>
+								</select>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.isp}">运营商</label>
+							<div class="am-u-sm-6 am-u-end">
+									<select  name="isp" th:value="${obj.isp}" th:action="@{~/area/isp}" class="chosen-select selectIsp" required="required"  th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<option th:id="${obj.id}" th:value="${obj.isp}" th:text="${obj.isp}" selected="selected"></option>
+								</select>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.priority}" >优先级</label>
+							<div class="am-u-sm-9">
+								<input type="number" id="user-phone" name="priority"
+									th:value="${obj.priority}" placeholder="输入你的优先级/priority" required="required" />
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="maxCapacity" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.maxCapacity}" >最大承载人数</label>
+							<div class="am-u-sm-9">
+								<input type="number" id="maxCapacity" name="maxCapacity"
+									th:value="${obj.maxCapacity}"
+									placeholder="输入最大承载人数/maxCapacity" required="required" />
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.server.form.status}">状态</label>
+							<div class="am-u-sm-9">
+							<select name="status" th:field="${obj.status}"  th:attr="data-placeholder=#{operation.pleaseSelect}" >
+									<option  value="1" th:text="#{Start}">启用</option>
+									<option  value="0" th:text="#{Stop}">停用</option>
+									</select>
+								<!-- <input type="tel" id="status" name="status"
+									th:value="${obj.status}"
+									placeholder="服务器状态/status" /> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<div class="am-u-sm-3 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-primary save" th:text="#{views.server.form.save}">保存</button>
+							</div>
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-primary cancel" th:text="#{views.server.form.cancel}">取消</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+<input type="hidden" name="from" th:value="${from}">
+<input type="hidden" name="strategyId" th:value="${strategyId}">
+<input type="hidden" name="typeId" th:value="${typeId}">
+</div>
+<script th:inline="javascript">
+/*<[[ */
+
+	$(function() {
+		initSelect();
+		var $form = $(".tpl-amazeui-form form");
+		$(".am-form-group .save").on("click", function(e) {
+			//表单校验
+			var name=$("input[name='name']").val();
+			var domain=$("input[name='domain']").val();
+			if(name==""){
+				comm.showMsg([[#{server.name.cantbeNull}]]);
+/* 				comm.showMsg("服务器名不能为空！"); */
+				return;
+			}
+			if(domain==""){
+				comm.showMsg([[#{server.domain.cantbeNull}]]);
+/* 				comm.showMsg("服务器域不能为空！"); */
+				return;
+			}
+			if(!$("select[name='type.id']").val()){
+				comm.showMsg([[#{please.select.type}]]);
+/* 				comm.showMsg("请选择类型!"); */
+				return ;
+			}
+			var countrySelected=$("select[name='country'");
+			//console.log(countrySelected[0][countrySelected[0].selectedIndex].id);
+		 	if(!countrySelected[0][countrySelected[0].selectedIndex].id){
+				comm.showMsg([[#{please.select.country}]]);
+/* 				comm.showMsg("请选择国家!"); */
+				return ;
+			} 
+/* 		 	if(!$("select[name='country']")[0].selectedOptions[0].id){
+				comm.showMsg("请选择国家!");
+				return ;
+			}  */
+			//console.log($("select[name='region']"));
+			var regionSelected=$("select[name='region']");
+			if(!regionSelected[0][regionSelected[0].selectedIndex].id){
+				comm.showMsg([[#{please.select.region}]]);
+/* 				comm.showMsg("请选择省!"); */
+				return ;
+			}
+			var citySelected=$("select[name='city']");
+			if(!citySelected[0][citySelected[0].selectedIndex].id){
+				comm.showMsg([[#{please.select.city}]]);
+/* 				comm.showMsg("请选择市!"); */
+				return ;
+			}
+			var ispSelected=$("select[name='isp']");
+			if(!ispSelected[0][ispSelected[0].selectedIndex].id){
+/* 				comm.showMsg("请选择运营商!"); */
+				comm.showMsg([[#{please.select.isp}]]);
+				return ;
+			}
+		_data = $form.serializeArray();//序列化表单数据
+			$btn = $(".am-form-group .save");
+			$btn.attr("disabled", "disabled");
+			$btn.text([[#{operation.submitting}]]);
+			$.post($form.attr("action"), _data, function(result) {
+				if (result.code == "success") {
+					//comm.showMsg("操作成功");
+					setTimeout(function() {
+						var from =$("input[name='from']").val();
+						//console.log(from);
+						//console.log(from);
+						if(from==="strategy"){
+						window.location.href = "/strategy/serverList?strategyId="+$("input[name='strategyId']").val()+"&typeId="+$("input[name='typeId']").val();
+						}else{
+						window.location.href = "/server/list?type.id="+$("select[name='type.id']").val();
+						}
+					},100);
+
+				} else if (result.code == "fail") {
+					comm.showMsg([[#{operation.failMsg}]]);
+					$btn.removeAttr("disabled", "disabled");
+					$btn.text([[#{operation.submit}]]);
+				}
+			}); 
+
+		});
+		$(".am-form-group .cancel").on("click", function(e) {
+			var from =$("input[name='from']").val();
+			if("strategy"==from){
+			history.go(-1);
+			}else{
+			window.location.href = "/serverType/list";
+			}
+		});
+
+		
+		
+	
+		
+	});
+	
+	function initSelect(){
+		var select=$("#selectInit");
+		var url=select.attr("action");
+		var value=select.attr("value");
+		var options="<option></option>";
+		
+		//console.log(value);
+		if(url){
+		$.get(url,function(result){
+			if(result.code=="success"){
+				select.empty();
+			var selected=" selected=selected";
+			$.each(result.data,function(index,obj){
+			//	console.log(obj);
+			if(obj.id==value){
+				options=options+"<option value="+obj.id+selected+" >"+obj.name+"</option>";
+			}else{			
+				options=options+"<option value="+obj.id+" >"+obj.name+"</option>";
+			}
+			});
+			select.append(options);
+			select.trigger("chosen:updated");
+			}
+		});
+		}
+}
+	
+	/* ]]>*/
+</script>
+<!-- //options.concat("<option value="+obj.id).concat(" selected=").concat("'").concat("selected").concat("'").concat(">").concat(obj.name+"</option>");
+				//options=options+("<option value="+obj.id+" selected=\'selected\'>"+obj.name+"</option>");
+			/*[+
+				options=options+("<option value="+obj.id+" selected=\'selected\'>"+obj.name+"</option>");
+				+]*/ -->
+
+</html>

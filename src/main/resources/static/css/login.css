@@ -1,0 +1,29 @@
+html {
+    height: 100%;
+    background: url("../images/front_page.jpg") center center no-repeat;
+    color: #8B8C8A;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+.header{height:66px;background:#ffffff;border-bottom: 1px solid #f1f1f1;}
+.header .header-h1,.main .container,.footer .footer-main{width:1000px;margin: 0 auto;}
+.header .header-h1 h1{font-family: "Microsoft YaHei";height:66px;line-height:66px;font-size: 20px;color:#333333;text-align: center;}
+.main{height:100%;width:100%;}
+.login .loginbox{width:520px;margin:100px auto;padding:25px; background:#FFFFFF;
+    border:1px solid #EEEEEE;opacity: .9;  filter: alpha(opacity=90);}
+.login .loginbox .login-img{float:left;width:164px;height:164px;padding:2px; border:1px solid #f1f1f1;}
+.loginbox .login-box{float:left;padding:0 30px;}
+.lo-title{height:40px;line-height:40px;text-align: center;font-size:25px;color:#333333;}
+.form-group{margin-bottom:15px;position: relative;}
+.form-control{ width: 100%;height:20px;line-height:20px;padding:10px 12px 8px 12px;font-size: 14px;color: #555;background-color: #fff;
+    background-image: none; border: 1px solid #ccc;vertical-align:middle;font-family: "Microsoft YaHei";}
+.enter-psw{position: absolute;top: 10px;left:12px;line-height: 20px;font-size: 14px;color: #555555;font-family: "Microsoft YaHei";}
+.line-input{border: none;outline: 0; box-shadow: none;border-radius: 0;border-bottom: 1px solid #f2f2f2; background:#FFFFFF;}
+.submit{display: inline-block; padding: 6px 12px; margin-bottom: 0;font-size: 14px;  font-weight: 400;line-height: 1.42857143;
+    text-align: center; white-space: nowrap;vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;
+     }
+.btn-green{background: #3AA21D; color: #fff;padding:6px 30px; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,.1);}
+.right-btn{display: inline;margin: 9px 0 0 12px;}
+.right-btn a{color:#3AA21D;}
+.footer{}

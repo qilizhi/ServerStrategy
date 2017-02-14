@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.strategy.editForm.strategyEdit}" >策略编辑</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.strategy.editForm.strategyManagement}" >策略管理</a></li>
+		<li th:text="#{views.strategy.editForm.strategyAdd}"><!-- <a th:href="@{~/server/list}" >策略列表</a> --></li>
+		<li class="am-active" th:text="#{views.strategy.editForm.strategyForm}">表单</li>
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-form"></span><span th:text="${title}"></span>
+			</div>
+			<!--     <div class="tpl-portlet-input tpl-fz-ml">
+                        <div class="portlet-input input-small input-inline">
+                            <div class="input-icon right">
+                                <i class="am-icon-search"></i>
+                                <input type="text" class="form-control form-control-solid" placeholder="搜索..."> </div>
+                        </div>
+                    </div> -->
+
+
+		</div>
+		<div class="tpl-block ">
+
+			<div class="am-g tpl-amazeui-form">
+
+
+				<div class="am-u-sm-12 am-u-md-9">
+					<form class="am-form am-form-horizontal"
+						th:action="@{~/strategy/saveOrUpdate}" method="post">
+						<input name="id" type="hidden" th:value="${obj.id}" />
+						<input name="isDefault" type="hidden" th:value="${obj.isDefault}" />
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.name}" >名称</label>
+							<div class="am-u-sm-9">
+								<input type="text" name="name" th:value="${obj.name}"
+									placeholder="昵称 / Name" />
+								<!-- <small>输入你的名字，让我们记住你。</small> -->
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.description}">说明</label>
+							<div class="am-u-sm-9">
+								<input type="text" id="user-name" name="description"
+									th:value="${obj.description}" placeholder="说明描述 /description" />
+								<!-- <small>输入你的名字，让我们记住你。</small> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-email" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.type}">策略类型
+							</label>
+							<div class="am-u-sm-3 am-u-end">
+								<select name="type" th:value="${obj.type}?${obj.type.name}:_"
+									class="chosen-select  selectInit"
+									th:action="@{~/strategyType/listAll}" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option th:id="${obj.type}?${obj.type.id}:_"
+										th:value="${obj.type}?${obj.type.name}:_"
+										th:text="${obj.type}?${obj.type.name}:_"></option>
+								</select>
+								<!--   <small>邮箱你懂得...</small> -->
+							</div>
+						</div>
+
+
+						<div class="am-form-group">
+							<label class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.server}">服务器 </label>
+							<div class="am-u-sm-6 am-u-end">
+								<select multiple name="servers" th:action="@{~/server/listAll}"
+									class="chosen-select selectServer" >
+									<option th:each="server:${obj.servers}"
+										th:value="${server.name}" th:id="${server.id}"
+										th:text="${server.name}" selected="selected"></option>
+								</select>
+								<!-- <input type="tel" id="user-phone" name="country" th:value="${obj.country}" placeholder="输入你的国家/country"/> -->
+							</div>
+						</div>
+
+
+						<div class="am-form-group">
+							<label class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.country}">国家 </label>
+							<div class="am-u-sm-6 am-u-end">
+								<select name="country" th:object="${obj.country}"
+									th:action="@{~/area/country}"
+									class="chosen-select selectCountry" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option value="" th:text="#{views.strategy.editForm.pleaseSelect}"></option>
+									<option th:if="${obj.country}" th:value="*{name}"
+										th:text="*{name}" th:id="*{id}" selected="selected"></option>
+								</select>
+							
+								<!-- <input type="tel" id="user-phone" name="country" th:value="${obj.country}" placeholder="输入你的国家/country"/> -->
+							</div>
+							<div class="am-u-sm-3 am-u-end">
+								 <input type="checkbox"  name="isNotCountry"  th:checked="${obj.isNotCountry}" placeholder="非/not"/> <span class="am-form-label" th:text="#{notCountry}">非国家</span>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.region}">省</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select name="region" th:object="${obj.region}"
+									th:action="@{~/area/region}" class="chosen-select selectRegion"
+									th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option th:if="${obj.region}" th:value="*{name}" th:id="*{id}"
+										th:text="*{name}" selected="selected"></option>
+								</select>
+
+								<!-- <input type="tel" id="user-phone" name="regoin"
+									th:value="${obj.region}" placeholder="输入你的区域/regoin" /> -->
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.city}">市
+							</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select name="city" th:object="${obj.city}"
+									th:action="@{~/area/city}" class="chosen-select selectCity"
+									th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option th:if="${obj.city}" th:value="*{name}"
+										th:text="*{name}" th:id="*{id}" selected="selected"></option>
+								</select>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.isp}">运营商</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select multiple name="isps" th:action="@{~/area/isp}"
+									class="chosen-select selectIsp" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option th:each="isp:${obj.isps}" th:value="${isp.name}"
+										th:id="${isp.id}" th:text="${isp.name}" selected="selected"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.editForm.status}">状态</label>
+							<div class="am-u-sm-9">
+								<select name="status" th:field="${obj.status}" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option value="1"   th:text="#{views.strategy.editForm.start}">启用</option>
+									<option value="0"  th:text="#{views.strategy.editForm.stop}">停用</option>
+								</select>
+								<!-- <input type="tel" id="status" name="status"
+									th:value="${obj.status}"
+									placeholder="服务器状态/status" /> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<div class="am-u-sm-3 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-primary save" th:text="#{views.strategy.editForm.save}">保存</button>
+							</div>
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-primary cancel" th:text="#{views.strategy.editForm.cancel}">取消</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+           
+	$(function() {
+		 serverInit();
+	 	countryInit();
+		formSubmitInit();
+	});
+	
+	function isInServers(id){
+		var servers = [[${obj.servers}]];
+		for(var i=0;i<servers.length;i++){
+			if(id==servers[i].id)return true;
+		}
+		return false;
+	}
+	function countryInit(){
+		var countryId = [[${obj.country.id}]];
+	//	alert(countryId);
+		 var select=$(".selectCountry");
+			var url=select.attr("action");
+			var options="<option></option>";
+			if(url){
+			$.get(url,function(result){
+				if(result.code=="success"){
+					select.empty();
+				var selected="' selected='selected";
+				$.each(result.data,function(index,obj){
+				//	console.log(obj);
+		/* 		if(obj.id==countryId){
+					options=options+"<option value="+obj.id+selected+" >"+obj.name+"</option>";
+				}else{			
+					options=options+"<option value="+obj.id+" >"+obj.name+"</option>";
+				} */
+				if(obj.id==countryId){
+					options=options+"<option id="+obj.id +" code='"+obj.code+"' value='"+obj.name+selected+"'  > "+obj.name+"</option>";
+
+				}else{
+					
+					options=options+"<option id="+obj.id +" code='"+obj.code+"' value='"+obj.name+"'  > "+obj.name+"</option>";
+				}
+				});
+				select.append(options);
+				select.trigger("chosen:updated");
+				};
+			}); 
+			}
+			//绑定省事件
+			select.on("change", function(e, params) {
+				//alert(params);
+				//console.log(params);
+				if(params.selected){
+				  comm.regionInit(params.selected.id);
+				  comm.ispInit(params.selected.id);
+				} 
+				});
+	}
+	function serverInit(){
+		 var select=$(".selectServer");
+			var url=select.attr("action");
+			var options="<option>"+[[#{operation.pleaseSelect}]]+"</option>";
+			if(url){
+			$.get(url,function(result){
+				if(result.code=="success"){
+					select.empty();
+				var selected="' selected='selected";
+				$.each(result.data,function(index,obj){
+				//	console.log(obj);
+				if(isInServers(obj.id)){
+					options=options+"<option id="+obj.id +" code='"+obj.code+"' value='"+obj.name+selected+"'  > "+obj.name+"</option>";
+
+				}else{
+					
+					options=options+"<option id="+obj.id +" code='"+obj.code+"' value='"+obj.name+"'  > "+obj.name+"</option>";
+				}
+				});
+				select.append(options);
+				select.trigger("chosen:updated");
+				}
+			}); 
+			}
+		
+		
+	}
+	
+	function formSubmitInit(){
+		var $form = $(".tpl-amazeui-form form");
+		$(".am-form-group .save").on("click", function(e) {
+			//_data = $form.serializeArray();//序列化表单数据
+			//构造 数据data
+			var _data=new Object();
+			_data.id=$("input[name='id']").val();
+			_data.isDefault=$("input[name='isDefault']").val();
+			_data.name=$("input[name='name']").val();
+			//console.log($("input[name='isNotCountry']")[0].checked);
+			_data.isNotCountry=$("input[name='isNotCountry']")[0].checked;
+			_data.description=$("input[name='description']").val();
+			_data.status=$("select[name='status']").val();
+			if(!_data.name){
+				comm.showMsg([[#{strategy.name.cantbeNull}]]);
+				return ;
+			}
+			var typeSelected=$("select[name='type']");
+			if(typeSelected[0][typeSelected[0].selectedIndex].id){
+				_data.type=new Object();
+			_data.type.id=typeSelected[0][typeSelected[0].selectedIndex].id;
+			}else{
+				comm.showMsg([[#{please.select.type}]]);
+				return ;
+			}
+			var countrySelected=$("select[name='country']");
+			if(countrySelected[0][countrySelected[0].selectedIndex].id){
+				_data.country=new Object();
+			_data.country.id=countrySelected[0][countrySelected[0].selectedIndex].id;
+			}else{
+				comm.showMsg([[#{please.select.country}]]);
+				return ;
+			}
+			var citySelected=$("select[name='city']");
+			console.log(citySelected);
+			if(citySelected[0][citySelected[0].selectedIndex]&&citySelected[0][citySelected[0].selectedIndex].id){
+				_data.city=new Object();
+			_data.city.id=citySelected[0][citySelected[0].selectedIndex].id;
+			}
+			var regionSelected=$("select[name='region']");
+			if(regionSelected[0][regionSelected[0].selectedIndex]&&regionSelected[0][regionSelected[0].selectedIndex].id){
+				_data.region=new Object();
+			_data.region.id=regionSelected[0][regionSelected[0].selectedIndex].id;
+			}
+			console.log($("select[name='servers'] option:selected"));
+			//isps=$("select[name='isps']")[0].selectedOptions;
+			isps=$("select[name='isps'] option:selected");
+			//servers=$("select[name='servers']")[0].selectedOptions;
+			servers=$("select[name='servers'] option:selected");
+		/* 	
+			if($("select[name='type']")[0].selectedOptions[0].id){
+				_data.type=new Object();
+			_data.type.id=$("select[name='type']")[0].selectedOptions[0].id;
+			}else{
+				comm.showMsg("请选择策略类型!");
+				return ;
+			}
+			if($("select[name='country']")[0].selectedOptions[0].id){
+				_data.country=new Object();
+			_data.country.id=$("select[name='country']")[0].selectedOptions[0].id;
+			}else{
+				comm.showMsg("请选择国家!");
+				return ;
+			}
+			if($("select[name='city']")[0].selectedOptions[0]&&$("select[name='city']")[0].selectedOptions[0].id){
+			_data.city=new Object();
+			_data.city.id=$("select[name='city']")[0].selectedOptions[0].id;
+			}
+			if($("select[name='region']")[0].selectedOptions[0]&&$("select[name='region']")[0].selectedOptions[0].id){
+			_data.region=new Object();
+			_data.region.id=$("select[name='region']")[0].selectedOptions[0].id;
+			}
+			isps=$("select[name='isps']")[0].selectedOptions;
+			servers=$("select[name='servers']")[0].selectedOptions; */
+			if(servers){
+				_data.servers=new Array();
+				if(servers.length==0){
+					comm.showMsg([[#{strategy.server.cantbeNull}]]);
+					return ;
+				}
+			for(var i=0;i<servers.length;i++){
+				if(servers[i]){
+				_data.servers[i]=new Object();
+				_data.servers[i].id=servers[i].id;
+				};
+			};
+			}else{
+				comm.showMsg([[#{please.select.server}]]);
+				return ;
+			}
+			if(isps){
+			_data.isps=new Array();
+			if(isps.length==0){
+				comm.showMsg([[#{strategy.isp.canbeNull}]]);
+				return;}
+			for(var i=0;i<isps.length;i++){
+				if(isps[i]){
+				_data.isps[i]=new Object();
+				_data.isps[i].id=isps[i].id;
+				}
+			}
+			}else{
+				comm.showMsg([[#{please.select.isp}]]);
+				return ;
+			}
+		//	console.log(JSON.stringify(_data));
+		//	console.log(_data);
+			$btn = $(".am-form-group .save");
+			$btn.attr("disabled", "disabled");
+			$btn.text([[#{operation.submitting}]]);
+			url=$form.attr("action");
+			 $.ajax({ 
+		            type:"POST", 
+		            url:url, 
+		            dataType:"json",      
+		           contentType:"application/json",               
+		            data:JSON.stringify(_data), 
+		            success:function(result){ 
+		            	if (result.code == "success") {
+							//comm.showMsg("操作成功");
+							setTimeout(function() {
+								window.location.href = "/strategy/list?type.id="+_data.type.id;
+							},100);
+						} else if (result.code == "fail") {
+							comm.showMsg([[#{operation.failMsg}]]);
+							$btn.removeAttr("disabled", "disabled");
+							$btn.text([[#{operation.submit}]]);                         
+		            } 
+		            }
+		         }); 
+
+		});
+		$(".am-form-group .cancel").on("click", function(e) {
+			//window.location.href = "/server/list";
+			history.go(-1);
+		});
+	}
+	
+	 /*]]>*/
+</script>
+</html>

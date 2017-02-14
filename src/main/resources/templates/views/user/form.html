@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div class="tpl-content-wrapper">
+            <div class="tpl-content-page-title" th:text="#{views.user.form.formTitle}">
+          
+            </div>
+            <ol class="am-breadcrumb">
+                <li><a href="#" class="am-icon-home" th:text="#{views.user.form.systemManagement}" ></a></li>
+                <li><a th:href="@{~/user/list}" th:text="#{views.user.form.userManagement}"></a></li>
+                <li class="am-active"  th:text="#{views.user.form.formTitle}"></li>
+            </ol>
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span class="am-icon-form"></span><span th:text="${title}"></span>
+                    </div>
+                <!--     <div class="tpl-portlet-input tpl-fz-ml">
+                        <div class="portlet-input input-small input-inline">
+                            <div class="input-icon right">
+                                <i class="am-icon-search"></i>
+                                <input type="text" class="form-control form-control-solid" placeholder="鎼滅储..."> </div>
+                        </div>
+                    </div> -->
+
+
+                </div>
+                <div class="tpl-block ">
+
+                    <div class="am-g tpl-amazeui-form">
+
+
+                        <div class="am-u-sm-12 am-u-md-9">
+                            <form class="am-form am-form-horizontal" th:action="@{~/user/saveOrUpdate}" method="post">
+                               <input name="id" type="hidden" th:value="${obj.id}" /> 
+                                <div class="am-form-group">
+                                    <label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.user.form.name}"></label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" id="user-name" name="name" th:value="${obj.name}" placeholder="昵称/ Name"/>
+                                       <!--   <small id="nameTip" style="color:red;display:none" th:text="#{views.user.form.nameRepleat}"></small> -->
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.user.form.userName}"></label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" id="user-name" name="username" th:value="${obj.username}" placeholder="登录名/loginName"/>
+                                         <small id="nameTip" style="color:red;display:none" th:text="#{views.user.form.nameRepleat}"></small>
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label" th:text="#{views.user.form.email}"> </label>
+                                    <div class="am-u-sm-9">
+                                        <input type="email" name="email" id="user-email" th:value="${obj.email}" placeholder="邮箱/ Email" />
+                                     
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.user.form.phone}"> </label>
+                                    <div class="am-u-sm-9">
+                                        <input type="tel" id="user-phone" name="phone" th:value="${obj.phone}" placeholder="手机号/ Telephone"/>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
+                                        <button type="button" class="am-btn am-btn-primary" th:text="#{views.user.form.save}"></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+<script th:inline="javascript">
+/*<![CDATA[*/  
+$(function(){
+	var nameRepleat=true;
+	$("input[name='name']").keyup(function(e){
+		var url="/user/checkName";
+		var name=$("input[name='username']").val();
+		$("#defaultShow").css("display","none");
+		$.get(url,{name:name},function(result){
+			if(result.code="success"){
+				if(result.data>0){
+					$("#nameTip").css("display","block");
+					nameRepleat=true;
+				}else{
+					$("#nameTip").css("display","none");
+					nameRepleat=false;
+				}
+			}
+		});
+		
+	});
+	  var $form = $(".tpl-amazeui-form form");
+		$(".am-form-group button").on("click",function(e){
+			
+			if(!$("input[name='name']").val()){
+				comm.showMsg([[#{views.user.form.nameNull}]]);
+				return;
+			}
+			if(nameRepleat){
+				comm.showMsg([[#{views.user.form.nameRepleat}]]);
+				return;
+			}
+			if(!$("input[name='username']").val()){
+				comm.showMsg([[#{views.user.form.userNameNull}]]);
+				return ;
+			}
+			if(!$("input[name='email']").val()){
+				comm.showMsg([[#{views.user.form.emailNull}]]);
+				return ;
+			}
+			if(!$("input[name='phone']").val()){
+				comm.showMsg([[#{views.user.form.phoneNull}]]);
+				return ;
+			}
+			
+			 _data = $form.serializeArray();
+			 $btn=$(".am-form-group button");
+			 $btn.attr("disabled","disabled");
+			 $btn.text([[#{operation.submitting}]]);
+			 $.post($form.attr("action"),_data,function(result){
+					if(result.code =="success"){
+						comm.showMsg([[#{operation.success}]]);
+						setTimeout(function(){
+							window.location.href ="/user/list";
+						},2000);
+						
+					}else if(result.code =="fail"){
+						comm.showMsg([[#{operation.fail}]]);
+						 $btn.removeAttr("disabled","disabled");
+						 $btn.text([[#{operation.submit}]]);
+					}
+				});
+			
+		})
+		
+});
+     /*]]>*/  
+</script>
+
+
+</html>

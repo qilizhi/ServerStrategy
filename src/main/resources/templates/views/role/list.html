@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+ <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title th:text="#{views.role.list.title}">权限管理</title>
+<link th:href="@{~/assets/jstree/dist/themes/default/style.min.css}"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{~/assets/jquery-multi-select/css/multi-select.css}"
+	rel="stylesheet" type="text/css" />
+</head>
+<style>
+.tools {
+	text-align: right;
+}
+</style>
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title"
+		th:text="#{views.role.list.form}">表单</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home"
+			th:text="#{views.role.list.systemManagement}">系统管理</a></li>
+		<li><a th:href="@{~/user/list}"
+			th:text="#{views.role.list.roleManagement}">用户管理</a></li>
+		<li class="am-active" th:text="#{views.role.list.roleAuthoritySet}">密码修改</li>
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-form"></span><span th:text="${title}"></span>
+			</div>
+			<!--     <div class="tpl-portlet-input tpl-fz-ml">
+                        <div class="portlet-input input-small input-inline">
+                            <div class="input-icon right">
+                                <i class="am-icon-search"></i>
+                                <input type="text" class="form-control form-control-solid" placeholder="搜索..."> </div>
+                        </div>
+                    </div> -->
+
+
+		</div>
+		<div class="tpl-block ">
+
+			<div class="am-g tpl-amazeui-form">
+
+
+				<div class="am-u-sm-12 am-u-md-4">
+					<div class="portlet yellow-lemon box">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="am-icon-cogs"></i>
+								
+								 <span class="caption-subject font-green-sharp bold uppercase" th:text="#{views.role.list.roleTree}">角色树</span>
+							</div>
+							<div class="tools">
+								<!-- 	<button type="button" class="am-btn am-btn-success am-btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i> Create</button>
+								<a class="collapse"> </a> <a title="新增" id="add">+</a>  -->
+								<!-- <a	class="" id="reload">df </a> -->
+								<a class="am-badge am-badge-success am-round"><i
+									class="am-icon-plus" th:title="#{views.role.list.addTreeRoot}"><!-- 新增权限树的根 --></i></a>
+								<!--  <a href="#portlet-config"
+									data-toggle="modal" class="config"> </a> <a href="javascript:;"
+									class="remove"> </a> -->
+							</div>
+						</div>
+						<div class="tpl-left-nav-list">
+							<div id="tree_3" class="tree-demo"></div>
+						</div>
+					</div>
+
+				</div>
+				<div class="am-u-sm-12 am-u-md-8">
+
+                         <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="am-icon-tree font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp bold uppercase" th:text="#{views.role.list.authorityTree}" >权限树</span>
+                                    </div>
+                                  <!--   <div class="actions">
+                                        <div class="btn-group">
+                                            <a class="btn green-haze btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> Actions
+                                                <i class="fa fa-angle-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <a href="javascript:;"> Option 1</a>
+                                                </li>
+                                                <li class="divider"> </li>
+                                                <li>
+                                                    <a href="javascript:;">Option 2</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">Option 3</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">Option 4</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="tree_2" class="tree-demo"> </div>
+                                </div>
+                            </div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+	<div class="am-modal-dialog">
+		<!-- <div class="am-modal-hd">添加</div> -->
+		<div class="am-modal-bd">
+			<input type="hidden" class="form-control" name="id" />
+			<div class="form-group  margin-top-20">
+				<label class="control-label col-md-3" th:text="#{views.role.list.rootRoleName}" >角色根名称 
+				</label>
+				<div class="col-md-3">
+					<div class="input-icon right">
+						<i class="fa"></i> <input type="text" class="form-control"
+							name="name" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="am-modal-footer">
+			<span class="am-modal-btn" data-am-modal-cancel  th:text="#{operation.cancel}">取消</span> <span
+				class="am-modal-btn" data-am-modal-confirm th:text="#{operation.confirm}">确定</span>
+		</div>
+	</div>
+</div>
+<script th:src="@{~/assets/jstree/dist/jstree.min.js}"
+	type="text/javascript"></script>
+<script th:src="@{~/assets/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{~/assets/js/bootbox.min.js}" type="text/javascript"></script>
+<script th:src="@{~/js/role.js}" type="text/javascript"></script>
+<script th:inline="javascript">
+/* <[DATA[ */
+       
+	$(document).on("click", ".am-round", function(e) {
+		/*  bootbox.alert("Hello world!", function() {
+		     console.log("Alert Callback");
+		 }); */
+		 var modalO=$("#my-confirm");
+			
+			modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(options) {
+				var name=modalO.find(":input[name='name']").val();
+				$.ajax({
+					url :"/role/create",
+					type : 'post',
+					dataType:"json",
+					data : {
+						"name":name
+					},
+					success : function(result) {
+						
+						if (result.code == "success") {
+							//$("#addRoleResponsive").modal('hide');
+							//$("div.modal-backdrop").remove();
+							//重设表单 
+						//	$("#addRoleResponsive #modalForm").each(function() {
+							//	this.reset();
+						//	});
+							location.reload();
+
+						} else {
+							//$("#message").html("创建失败！");
+							comm.showMsg([[#{operation.fail}]]);
+							//$("#ajax").hide();
+						}
+					},
+					error : function(e) {
+						//$("#message").html("请求出错！");
+						comm.showMsg([[#{operation.requestErr}]]);
+						//$("#ajax").hide();
+					}
+				});
+			},
+			// closeOnConfirm: false,
+			onCancel : function() {
+				//alert("算求，不弄了");
+			}
+		});
+
+	});
+	/* ]]> */
+</script>
+
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.user.area.areaModify}"></div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.user.area.systemManagement}"></a></li>
+	<!-- 	<li><a th:href="@{~/area/list}" th:text="#{views.user.area.areaManagement}">鍦板尯绠＄悊</a></li> -->
+		<li class="am-active" th:text="#{views.user.area.areaSetting}" ></li>
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-form"></span><span th:text="${title}"></span>
+			</div>
+		</div>
+		<div class="tpl-block ">
+
+			<div class="am-g tpl-amazeui-form">
+
+
+				<div class="am-u-sm-9 am-u-md-2">
+					<div class="am-form-group">
+						<label for="user-phone" class="am-form-label" th:text="#{views.user.area.country}"></label> <select
+							name="country" th:action="@{~/area/country}"
+							class="chosen-select selectCountry" th:attr="data-placeholder=#{operation.pleaseSelect}">
+							<!-- <option value="" ></option> -->
+							<!-- 	<option th:value="${server.country}" th:text="${server.country}" selected="selected"></option>  -->
+						</select> <a href="javascript:void(0)" onclick="countryAdd()" th:text="#{views.user.area.add}"></a> <a
+							href="javascript:void(0)" onclick="countryEdit()" th:text="#{views.user.area.edit}"></a> <a
+							href="javascript:void(0)" onclick="countryDel()" th:text="#{views.user.area.del}" ></a>
+					</div>
+				</div>
+				<div class="am-u-sm-9 am-u-md-2">
+					<div class="am-form-group">
+						<label for="user-phone" class="am-form-label" th:text="#{views.user.area.region}"></label> <select
+							name="region" th:action="@{~/area/region}"
+							class="chosen-select selectRegion" th:attr="data-placeholder=#{operation.pleaseSelect}">
+							<!-- <option value="">鍏ㄩ�</option> -->
+							<!-- <option th:value="${server.region}" th:text="${server.region}"
+									selected="selected"></option> -->
+						</select> <a href="javascript:void(0)" onclick="regionAdd()" th:text="#{views.user.area.add}"><!-- 新增 --></a> <a
+							href="javascript:void(0)" onclick="regionEdit()" th:text="#{views.user.area.edit}"><!-- 编辑 --></a> <a
+							href="javascript:void(0)" onclick="regionDel()" th:text="#{views.user.area.del}" ><!-- 删除  --></a>
+					</div>
+				</div>
+				<div class="am-u-sm-9 am-u-md-3">
+					<div class="am-form-group">
+						<label for="user-phone" class="am-form-label" th:text="#{views.user.area.city}"></label> <select
+							name="city" th:action="@{~/area/city}"
+							class="chosen-select selectCity" th:attr="data-placeholder=#{operation.pleaseSelect}">
+							<!-- <option value="">鍏ㄩ�</option> -->
+							<!-- 	<option th:value="${server.city}" th:text="${server.city}"
+									selected="selected"></option> -->
+						</select> <a href="javascript:void(0)" onclick="cityAdd()" th:text="#{views.user.area.add}"></a> <a
+							href="javascript:void(0)" onclick="cityEdit()" th:text="#{views.user.area.edit}"></a> <a
+							href="javascript:void(0)" onclick="cityDel()" th:text="#{views.user.area.del}"></a>
+					</div>
+				</div>
+				<div class="am-u-sm-9 am-u-md-3 am-u-end">
+					<div class="am-form-group">
+						<label for="user-phone" class="am-form-label" th:text="#{views.user.area.isp}"></label> <select
+							name="isp" th:action="@{~/area/isp}"
+							class="chosen-select selectIsp"  th:attr="data-placeholder=#{operation.pleaseSelect}" >
+							<!-- <option th:value="${obj.isp}" th:text="${obj.isp}"
+									selected="selected"></option> -->
+						</select> <a href="javascript:void(0)" onclick="ispAdd()" th:text="#{views.user.area.add}"></a> <a
+							href="javascript:void(0)" onclick="ispEdit()" th:text="#{views.user.area.edit}"></a> <a
+							href="javascript:void(0)" onclick="ispDel()" th:text="#{views.user.area.del}"></a>
+					</div>
+				</div>
+
+			</div>
+			<!-- <div class="am-form-group">
+				<div class="am-u-sm-9 am-u-sm-push-3">
+					<button type="button" class="am-btn am-btn-primary">淇濆瓨淇敼</button>
+				</div>
+			</div> -->
+		</div>
+
+	</div>
+</div>
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+	<div class="am-modal-dialog" style="min-width:650px;">
+		<div class="am-modal-hd" th:text="#{views.user.area.form}"></div>
+		<div class="am-modal-bd">
+				<div class="am-g tpl-amazeui-form"> 
+				<div class="am-u-sm-12 am-u-md-12">
+				<label for="user-phone" class="am-u-sm-2 am-form-label" th:text="#{views.user.area.name}">
+				</label><input type="hidden" name="id" value="">
+				<div class="am-u-md-4">
+					<input type="text" name="name" th:placeholder="#{operation.pleaseSelect}" />
+				</div>
+
+				<label for="user-phone" class="am-u-sm-2 am-form-label" th:text="#{views.user.area.code}">
+				</label>
+				<div class="am-u-md-4 am-u-end">
+					<input type="text" name="code" placeholder="code" />
+				</div>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="am-modal-footer">
+			<span class="am-modal-btn" data-am-modal-cancel th:text="#{views.user.area.cancel}"></span> <span
+				class="am-modal-btn" data-am-modal-confirm th:text="#{views.user.area.submit}"></span>
+		</div>
+	</div>
+</div>
+
+<script th:inline="javascript" >
+/*<![CDATA[*/  
+	var modalO = $("#my-prompt");
+	var country_url = "/area/country/saveOrUpdate";
+	var country_del_url = "/area/country/del";
+	var region_url = "/area/region/saveOrUpdate";
+	var region_del_url = "/area/region/del";
+	var city_url = "/area/city/saveOrUpdate";
+	var city_del_url = "/area/city/del";
+	var isp_url = "/area/isp/saveOrUpdate";
+	var isp_del_url = "/area/isp/del";
+	function countryAdd() {
+		modalO.find(".am-modal-hd").text([[#{operation.add}]]);
+		//var country=$(".selectCountry").val();
+		//console.log(country);
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+
+				$.post(country_url, {
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operateion.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	function countryEdit() {
+
+		modalO.find(".am-modal-hd").text([[#{operation.add}]]);
+		var country = $(".selectCountry option:selected");
+		//console.log(country);
+		var name = country.val();
+		if(!name){
+			comm.showMsg([[#{views.user.area.pleaseSelectCountry}]]);
+			return;
+		}
+		console.log(country);
+		var code = country[0].attributes.code.value;
+		var id = country[0].id;
+
+		modalO.find(":input[name='name']").val(name);
+		modalO.find(":input[name='code']").val(code);
+		modalO.find(":input[name='id']").val(id);
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+				$.post(country_url, {
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operateion.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+
+	function countryDel(){
+		var select = $(".selectCountry option:selected");
+		//console.log(country);
+		var name = select.val();
+		if(!name){
+			comm.showMsg([[#{views.user.area.pleaseSelectCountry}]]);
+			return;
+		}
+		//var id = select[0].selectedOptions[0].id;
+		var id = select[0].id;
+		comm.del(country_del_url,id);
+		
+	}
+	function regionAdd() {
+		modalO.find(".am-modal-hd").text([[#{operation.add}]]);
+		var country = $(".selectCountry option:selected");
+		//console.log(country);
+		//var name=country.val();
+		//var code=country[0].selectedOptions[0].attributes.code.value;
+	//	var countryId = country[0].selectedOptions[0].id;
+		var countryId = country[0].id;
+
+		if (!countryId) {
+			comm.showMsg([[#{views.user.area.pleaseSelectCountry}]]);
+			return;
+		}
+		//console.log(country);
+		//鎵撳紑modal
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+
+				$.post(region_url, {
+					countryId : countryId,
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operation.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	function regionEdit() {
+
+		modalO.find(".am-modal-hd").text([[#{operation.add}]]);
+		var country = $(".selectCountry option:selected");
+		//var countryId = country[0].selectedOptions[0].id;
+		var countryId = country[0].id;
+		if (!countryId) {
+			comm.showMsg([[#{views.user.area.pleaseSelectCountry}]]);
+			return;
+		}
+		var region = $(".selectRegion option:selected");
+		//console.log(country);
+		var name = region.val();
+		if (!name) {
+			comm.showMsg([[#{views.user.area.pleaseSelectRegion}]]);
+			return;
+		}
+		//var code = region[0].selectedOptions[0].attributes.code.value;
+		var code = region[0].attributes.code.value;
+		var id = region[0].id;
+		//var id = region[0].selectedOptions[0].id;
+
+		//璁剧疆modal鐨勫� 
+		modalO.find(":input[name='name']").val(name);
+		modalO.find(":input[name='code']").val(code);
+		modalO.find(":input[name='id']").val(id);
+		//鎵撳紑modal
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+				$.post(region_url, {
+					countryId : countryId,
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operation.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	function regionDel(){
+		var select = $(".selectRegion option:selected");
+		//console.log(country);
+		var name = select.val();
+		if(!name){
+			comm.showMsg([[#{views.user.area.pleaseSelectRegion}]]);
+			return;
+		}
+	//	var id = select[0].selectedOptions[0].id;
+	var id = select[0].id;
+		comm.del(region_del_url,id);
+		
+	}
+	function cityAdd() {
+		modalO.find(".am-modal-hd").text([[#{operation.add}]]);
+		var region = $(".selectRegion option:selected");
+		//console.log(country);
+		//var name=country.val();
+		//var code=country[0].selectedOptions[0].attributes.code.value;
+		var regionId = region.val();
+		//var regionName=region.val()
+		if (!regionId) {
+			comm.showMsg([[#{views.user.area.pleaseSelectRegion}]]);
+			return;
+		}
+		//console.log(country);
+		//鎵撳紑modal
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+
+				$.post(city_url, {
+					regionId : regionId,
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operation.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	function cityEdit() {
+
+		modalO.find(".am-modal-hd").text([[#{operation.edit}]]);
+		var region = $(".selectRegion option:selected");
+		var regionId = region.val();
+		if (!regionId) {
+			comm.showMsg([[#{operation.tip}]],[[#{views.user.area.pleaseSelectCity}]]);
+			return;
+		}
+		var city = $(".selectCity option:selected");
+		//console.log(country);
+	
+		var name = city.val();
+		if (!name) {
+			comm.showMsg([[#{views.user.area.pleaseSelectCity}]]);
+			return;
+		}
+		/* var code = city[0].selectedOptions[0].attributes.code.value;
+		var id = city[0].selectedOptions[0].id; */
+		var id = city[0].id;
+		var code = city[0].attributes.code.value;
+		
+
+		modalO.find(":input[name='name']").val(name);
+		modalO.find(":input[name='code']").val(code);
+		modalO.find(":input[name='id']").val(id);
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+				$.post(city_url, {
+					regionId : regionId,
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operation.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	function cityDel(){
+		var select = $(".selectCity option:selected");
+		//console.log(country);
+		var name = select.val();
+		if(!name){
+			comm.showMsg([[#{views.user.area.pleaseSelectCity}]]);
+			return;
+		}
+		//var id = select[0].selectedOptions[0].id;
+		var id = select[0].id;
+		comm.del(city_del_url,id);
+		
+	}
+	function ispAdd() {
+		modalO.find(".am-modal-hd").text([[#{operation.add}]]);
+		var country = $(".selectCountry option:selected");
+		//console.log(country);
+		//var name=country.val();
+		//var code=country[0].selectedOptions[0].attributes.code.value;
+		//var countryId = country[0].selectedOptions[0].id;
+		var countryId = country[0].id;
+
+		if (!countryId) {
+			comm.showMsg([[#{views.user.area.pleaseSelectCountry}]]);
+			return;
+		}
+		//console.log(country);
+		//鎵撳紑modal
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+
+				$.post(isp_url, {
+					countryId : countryId,
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						// comm.alert("鎻愮ず","鍒犻櫎鎿嶄綔鎴愬姛");
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operation.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				//console.log(e);
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	function ispEdit() {
+		modalO.find(".am-modal-hd").text([[#{operation.edit}]]);
+		var country = $(".selectCountry option:selected");
+		var countryId = country[0].id;
+		if (!countryId) {
+			comm.showMsg([[#{views.user.area.pleaseSelectCountry}]]);
+			return;
+		}
+		var isp = $(".selectIsp option:selected");
+		var name = isp.val();
+		if (!name) {
+			comm.showMsg([[#{views.user.area.pleaseSelectIsp}]]);
+			return;
+		}
+	//	var code = isp[0].selectedOptions[0].attributes.code.value;
+	//	var id = isp[0].selectedOptions[0].id;
+		var code = isp[0].attributes.code.value;
+		var id = isp[0].id;
+		modalO.find(":input[name='name']").val(name);
+		modalO.find(":input[name='code']").val(code);
+		modalO.find(":input[name='id']").val(id);
+		modalO.modal({
+			relatedTarget : this,
+			onConfirm : function(e) {
+				var name = modalO.find(":input[name='name']").val();
+				var code = modalO.find(":input[name='code']").val();
+				var id = modalO.find(":input[name='id']").val();
+				$.post(isp_url, {
+					countryId : countryId,
+					name : name,
+					code : code,
+					id : id
+				}, function(result) {
+					if (result.code == "success") {
+						setTimeout(function() {
+							window.location.href = window.location.href;
+						}, 1000);
+					} else if (result.code == "fail") {
+						comm.alert([[#{operation.tip}]], [[#{operation.fail}]]);
+					}
+				});
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			},
+			onCancel : function(e) {
+				modalO.find(":input[name='name']").val("");
+				modalO.find(":input[name='code']").val("");
+				modalO.find(":input[name='id']").val("");
+			}
+		});
+	}
+	
+	function ispDel(){
+		var select = $(".selectIsp option:selected");
+		//console.log(country);
+		var name = select.val();
+		if(!name){
+			comm.showMsg([[#{views.user.area.pleaseSelectIsp}]]);
+			return;
+		}
+		var id = select[0].id;
+		comm.del(isp_del_url,id);
+		
+	}
+	$(function() {
+
+		var $form = $(".tpl-amazeui-form form");
+		$(".am-form-group button").on("click", function(e) {
+			_data = $form.serializeArray();
+			$btn = $(".am-form-group button");
+			$btn.attr("disabled", "disabled");
+			$btn.text([[#{operation.submitting}]]);
+			$.post($form.attr("action"), _data, function(result) {
+				if (result.code == "success") {
+					comm.showMsg([[#{operation.success}]]);
+					setTimeout(function() {
+						window.location.href = "/user/list";
+					}, 2000);
+
+				} else if (result.code == "fail") {
+					comm.showMsg([[#{operation.fail}]]);
+					$btn.removeAttr("disabled", "disabled");
+					$btn.text([[#{operation.submit}]]);
+				}
+			});
+
+		})
+
+	});
+	
+/*]]>*/  
+	
+</script>
+
+
+</html>

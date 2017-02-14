@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title th:text="#{views.strategy.search.title}">策略管理搜索</title>
+</head>
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.strategy.search.conditionSearch}" >条件搜索</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.strategy.search.search}">搜索</a></li>
+		<li><a th:href="@{~/search/list}" th:text="#{views.strategy.search.conditionSearch}">条件搜索</a></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-search" th:text="#{views.strategy.search.search}">搜索</span>
+			</div>
+		 <div class="tpl-portlet-input tpl-fz-ml">
+		 <form th:action="@{~/search/list}" id="searchForm">
+				<div class="portlet-input input-middle input-inline">
+					<!-- <div class="input-icon right">
+						<i class="am-icon-search"></i> <input type="text"
+							class="form-control form-control-solid" placeholder="搜索..." />
+						
+					</div> -->
+					<div class="am-input-group am-input-group-sm">
+							<input type="text" class="am-form-field" name="searchString" th:value="${searchString}" placeholder="服务器/地区/运营商/状态" th:placeholder="#{views.strategy.search.searchString}" /> <span
+								class="am-input-group-btn" >
+								<button
+									class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+									type="submit"></button>
+							</span>
+
+						</div>
+					<input type="hidden" name="page" >
+					<input type="hidden" name="size" >
+				</div>
+				</form>
+			</div>
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-md-1">
+					<div class="am-btn-toolbar">
+						<!-- <div class="am-btn-group am-btn-group-xs">
+							<button type="button" th:href="@{~/strategy/add}"
+								class="am-btn am-btn-default am-btn-success list-add">
+								<span class="am-icon-plus"></span> 新增
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-secondary">
+								<span class="am-icon-save"></span> 保存
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-warning">
+								<span class="am-icon-archive"></span> 审核
+							</button>
+							<button type="button" class="am-btn am-btn-default am-btn-danger">
+								<span class="am-icon-trash-o"></span> 删除
+							</button>
+						</div> -->
+					</div>
+				</div>
+				<form th:action="@{~/strategy/list}" th:method="post">
+
+	<!-- 				<div class="am-u-sm-12 am-u-md-2">
+						<div class="am-form-group">
+							<select name="country" th:field="${strategy.country}"
+								th:action="@{~/area/country}"
+								class="chosen-select selectCountry" th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<option value="">全选</option>
+								<option th:value="${strategy.country}" th:text="${strategy.country}" selected="selected"></option> 
+							</select>
+						</div>
+					</div>
+					<div class="am-u-sm-12 am-u-md-2">
+						<div class="am-form-group">
+							<select name="region" th:value="${strategy.region}"
+								th:action="@{~/area/region}" class="chosen-select selectRegion"
+								th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<option value="">全选</option>
+								<option th:value="${strategy.region}" th:text="${strategy.region}"
+									selected="selected"></option>
+							</select>
+						</div>
+					</div>
+					<div class="am-u-sm-12 am-u-md-2">
+						<div class="am-form-group">
+							<select name="city" th:value="${strategy.city}"
+								th:action="@{~/area/city}" class="chosen-select selectCity"
+								th:attr="data-placeholder=#{operation.pleaseSelect}">
+								<option value="">全选</option>
+								<option th:value="${strategy.city}" th:text="${strategy.city}"
+									selected="selected"></option>
+							</select>
+						</div>
+					</div> -->
+				
+					<!-- <div class="am-u-sm-12 am-u-md-2">
+						<div class="am-form-group">
+							<select th:field="${strategy.type.id}" name="type.id"
+								class="chosen-select" th:attr="data-placeholder=#{operation.pleaseSelect}" >
+								<option value="" >请选择</option>
+								<option th:each="type:${EType}" th:text="${type.name}"
+									th:value="${type.id}">所有类别</option>
+								
+							</select>
+						</div>
+					</div> -->
+					<!-- <div class="am-u-sm-12 am-u-md-6">
+						<div class="am-input-group am-input-group-sm">
+							<input type="text" class="am-form-field" name="name" th:value="${strategy.name}" /> <span
+								class="am-input-group-btn">
+								<button
+									class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+									type="submit"></button>
+							</span>
+
+						</div>
+					</div> -->
+				</form>
+			</div>
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					<form class="am-form">
+						<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+								<tr>
+									<th class="table-check"><!-- <input type="checkbox" /> -->
+									</th>
+									<th class="table-id" th:text="#{views.strategy.search.NO}"><!-- 编号 --></th>
+									<th class="table-title" th:text="#{views.strategy.search.name}" ><!-- 名称 --></th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.description}"><!-- 说明 --></th>
+									<th class="table-title" th:text="#{views.strategy.search.type}"><!-- 类型 --></th>
+									<th class="table-type" th:text="#{views.strategy.search.serverNum}"><!--  服务器数量 --></th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.strategy.search.country}"><!-- 国家 --></th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.strategy.search.region}"><!-- 地区 --></th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.city}"><!-- 市 --></th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.isp}"><!-- 运营商 --></th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.status}"><!-- 状态 --></th>
+									<th class="table-set" th:text="#{views.strategy.search.operation}"><!-- 操作 --></th>
+
+								</tr>
+							</thead>
+							<tbody>
+						<th:block th:each="obj,iterStat:${pageList.getContent()}" th:with="servers=${obj.servers}">
+								<tr >
+									<td>
+									<i class="am-icon-minus more"></i>
+									<!-- <i class="am-icon-minus" ></i> -->
+									</td>
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${obj.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.description}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.type.name}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td ><a  th:text="${obj.servers.size()}" th:href="@{~/server/list(strategy.id=${obj.id})}"><!-- 服务器数量 --></a></td>
+									<td class="am-hide-sm-only" th:text="${obj.country.name}"><!-- 国家 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.region}?${obj.region.name}:_"><!-- 地区 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.city}?${obj.city.name}:_"><!-- 市 --></td>
+									<td class="am-hide-sm-only" >	<p th:each="isp:${obj.isps}" th:text="${isp.name}"><!--  运营商 --></p>
+									
+									</td>
+									<td class="am-hide-sm-only" ><span th:class="${obj.status==1?'am-text-success':'am-text-danger'}" th:text="${obj.status==1}?#{Start}:#{Stop}">状态</span></td>
+									<!-- 									<td class="am-hide-sm-only" th:text="${@EStatus[obj.priority]}">优先级</td> -->
+									<td>
+										<div class="am-btn-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<button th:href="@{'~/strategy/edit/'+${obj.id}}"
+													type="button"
+													class="am-btn am-btn-default am-btn-xs am-text-secondary list-edit">
+													<span class="am-icon-pencil-square-o" th:text="#{views.strategy.search.edit}"> 编辑</span> 
+												</button>
+												<!-- <button  type="button"
+													class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
+													<span class="am-icon-copy"></span> 复制
+												</button> -->
+												<button th:href="@{'~/strategy/del/'+${obj.id}}"
+													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only list-del">
+													<span class="am-icon-trash-o" th:text="#{views.strategy.search.edit}">删除</span> 
+												</button>
+											</div>
+										</div>
+									</td>
+									</tr><tr>
+																	<td colspan="12" >
+					<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+								<tr>
+									<!--  <th class="table-id"></th> -->
+									<th class="table-title" colspan="2" th:text="#{views.strategy.search.name}">名称</th>
+									<th class="table-title" th:text="#{views.strategy.search.type}">类型</th>
+									<th class="table-type" th:text="#{views.strategy.search.domain}">服务器域</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.strategy.search.country}">国家</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.strategy.search.region}">地区</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.city}">市</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.isp}">运营商</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.status}">状态</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.priority}">优先级</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.maxCapacity}">最大承载</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.strategy.search.actualCapacity}">已承载</th>
+									<th class="table-set" th:text="#{views.strategy.search.operation}">操作</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="obj,iterStat:${servers}">
+									<!-- <td > </td>  -->
+									<td th:text="${obj.name}" colspan="2">
+										<a href="#">Business management</a>
+									</td>
+									<td th:text="${obj.type.name}">
+										<a href="#">Business management</a>
+									</td>
+									<td th:text="${obj.domain}">default</td>
+									<td class="am-hide-sm-only" th:text="${obj.country}"><!-- 国家 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.region}"><!-- 地区 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.city}"><!-- 市 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.isp}"><!-- 运营商 --></td>
+									<td class="am-hide-sm-only"  ><span th:class="${obj.status==1?'am-text-success':'am-text-danger'}" th:text="${obj.status==1}?#{Start}:#{Stop}">状态</span ></td>
+									<td class="am-hide-sm-only" th:text="${obj.priority}"><!-- 优先级 --></td>
+																		<td class="am-hide-sm-only" th:text="${@EStatus[obj.priority]}"><!-- 优先级 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.maxCapacity}"><!-- 最大承载人数 --></td>
+									<td class="am-hide-sm-only" th:text="${obj.actualCapacity}"><!-- 已承载人数 --></td>
+									<td>
+										<div class="am-btn-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<button th:href="@{'~/server/edit/'+${obj.id}}"
+													type="button"
+													class="am-btn am-btn-default am-btn-xs am-text-secondary list-edit">
+													<span class="am-icon-pencil-square-o"  th:text="#{views.strategy.search.edit}"> 编辑</span>
+												</button>
+											<!-- 	<button  type="button"
+													class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
+													<span class="am-icon-copy"></span> 复制
+												</button> -->
+												<button th:href="@{'~/server/del/'+${obj.id}}"
+													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only list-del">
+													<span class="am-icon-trash-o" th:text="#{views.strategy.search.del}">删除</span> 
+												</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+
+							</tbody>
+						</table> 
+								</td></tr>
+									
+							
+							</th:block>
+								
+
+							</tbody>
+						</table>
+						<div
+							th:replace="layout/paginationjs::page(${pageList},${'~/search/list'})"></div>
+						<hr />
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".more").on("click",function(e){
+		$(this).toggleClass("am-icon-minus");
+		$(this).toggleClass("am-icon-plus");
+		if($(this).hasClass("am-icon-minus")){
+			$(this).parent().parent().next().children("td").css("display","");
+		}
+		if($(this).hasClass("am-icon-plus")){
+		$(this).parent().parent().next().children("td").css("display","none");
+		}
+		
+	});
+	
+	
+});
+function page(page,size){
+	$("input[name='page']").val(page);
+	$("input[name='size']").val(size);
+	$("#searchForm").submit();
+	/* 
+	var url=$("#searchForm").attr("action")+"?page="+page+"&size="+size; */
+	
+}
+
+</script>
+</html>

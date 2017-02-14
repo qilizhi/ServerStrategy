@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head th:include="layout/head::commhead(~{${content}::title}?:_,~{${content}::link}?:_)">
+</head>
+<!-- <head th:replace="layout/header::commhead"></head> -->
+<!-- <head>
+<title>视频策略管理系统</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta name="description" content="这是一个 main 页面" />
+<meta name="keywords" content="index" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-title" content="video" />
+<link rel="icon" type="image/png" th:href="@{~/assets/i/favicon.png}" />
+<link rel="apple-touch-icon-precomposed"
+	href="assets/i/app-icon72x72@2x.png" />
+<link rel="stylesheet" th:href="@{~/assets/css/amazeui.min.css}" />
+<link rel="stylesheet" th:href="@{~/assets/css/admin.css}" />
+<link rel="stylesheet" th:href="@{~/assets/css/app.css}" />
+<link rel="stylesheet" th:href="@{~/assets/css/amazeui.chosen.css}" />
+<link rel="icon" type="image/png" th:href="@{~/images/i/favicon.png}" />
+
+<sec:csrfMetaTags /> 
+</head> -->
+<body data-type="generalComponents">
+	 <script th:src="@{~/assets/js/jquery.min.js}"></script>
+<!-- 	<script th:src="@{~/assets/js/jquery-3.1.1.min.js}"></script> -->
+	
+		<!-- 头部 -->
+		<header th:replace="layout/header"></header>
+		<!-- 风格切换 -->
+ <div class="tpl-page-container tpl-page-header-fixed">
+		<!-- <div class="tpl-skiner">
+			<div class="tpl-skiner-toggle am-icon-adjust"></div>
+			<div class="tpl-skiner-content">
+				<div class="tpl-skiner-content-title">选择主题</div>
+				<div class="tpl-skiner-content-bar">
+					<span class="skiner-color skiner-white" data-color="theme-white"></span>
+					<span class="skiner-color skiner-black" data-color="theme-black"></span>
+				</div>
+			</div>
+		</div> -->
+		<!-- 侧边导航栏 -->
+		<div th:replace="layout/left-sidebar"></div>
+
+
+		<!-- 内容区域 -->
+ 
+		<div th:replace="${content}"></div>
+	</div>
+
+
+	<div th:include="layout/footer:: button"></div>
+
+</body>
+
+</html>

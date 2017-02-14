@@ -1,0 +1,65 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:fragment="commhead(title,links)">
+<title th:replace="${title}" th:text="#{layout.head.title}">视频策略管理系统</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- <meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" /> -->
+<meta name="description" content="这是一个 main 页面" />
+<meta name="keywords" content="index" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-title" content="video" />
+<link rel="icon" type="image/png" th:href="@{~/assets/i/favicon.png}" />
+<link rel="apple-touch-icon-precomposed"
+	href="assets/i/app-icon72x72@2x.png" />
+<link rel="stylesheet" th:href="@{~/assets/css/amazeui.min.css}" />
+<link rel="stylesheet" th:href="@{~/assets/css/admin.css}" />
+<link rel="stylesheet" th:href="@{~/assets/css/app.css}" />
+ <link rel="stylesheet" th:href="@{~/assets/css/amazeui.chosen.css}" /> 
+<link rel="stylesheet" th:href="@{~/assets/css/select2.css}" />
+<!-- <link rel="stylesheet" th:href="@{~/assets/css/select2-bootstrap.css}" /> -->
+<link rel="icon" type="image/png" th:href="@{~/images/i/favicon.png}" />
+ <th:block th:replace="${links}" />
+<sec:csrfMetaTags />
+<script th:inline="javascript" >
+/* 用于js里的多语言 */
+/*<![CDATA[*/  
+           var operation=new Object();
+        /*    var views={
+        		   user:{
+        			   form:{}
+        		   }
+                       
+           } */
+  /*          var views=new Object();
+           var views.user=new Object();
+           var views.user.form=new Object();
+           views.user.form.nameNull=[[#{nameNull}]];
+           views.user.form.userNameNull=[[#{userNameNull}]];
+           views.user.form.emailNull=[[#{emailNull}]];
+           views.user.form.phoneNull=[[#{phoneNull}]]; */
+           operation.pleaseSelect=[[#{operation.pleaseSelect}]];
+           operation.tip=[[#{operation.tip}]];
+           operation.serverErr=[[#{operation.serverErr}]];
+           operation.hasNoAuthority=[[#{operation.hasNoAuthority}]];
+           operation.Timeout=[[#{operation.Timeout}]];
+           operation.pathInvalid=[[#{operation.pathInvalid}]];
+           operation.unknowErr=[[#{operation.unknowErr}]];
+           operation.noLogin=[[#{operation.noLogin}]];
+           operation.deletMsgConfirm=[[#{operation.deletMsgConfirm}]];
+           operation.failMsg=[[#{operation.failMsg}]];
+           operation.isContinue=[[#{operation.isContinue}]];
+           
+           
+           /*]]>*/  
+
+</script>
+</head>
+
+</html>

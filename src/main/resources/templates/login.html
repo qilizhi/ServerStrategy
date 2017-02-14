@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title th:text="#{login.title}">视频策略管理系统</title>
+<link type="text/css" rel="stylesheet" th:href="@{/css/login.css}" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/global.css}" />
+<!-- <meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" /> -->
+<style type="text/css">
+#code {
+	font-family: Arial;
+	font-style: italic;
+	font-weight: bold;
+	border: 0;
+	letter-spacing: 2px;
+	color: blue;
+}
+</style>
+</head>
+
+<body>
+	<div class="header">
+		<div class="header-h1">
+			<h1 th:text="#{login.title}">视频策略管理系统</h1>
+		</div>
+	</div>
+	<div class="main">
+		<div class="login">
+			<div class="container">
+				<div class="loginbox clearfix">
+					<div class="login-img">
+						<img th:src="@{~/images/logo.png}" width="164" height="164" alt="" />
+					</div>
+					<div class="login-box">
+						<form th:action="@{/login}" method="post" id="form" onsubmit ="return validate()">
+							<div class="form-group">
+								<input class="form-control line-input" id="username" type="text"
+									name="username" value="" th:placeholder="#{login.userName}" />
+							</div>
+							<div class="form-group">
+								<input class="form-control line-input" id="password"
+									name="password" type="password" value=""
+									th:placeholder="#{login.password}" />
+								<!-- <span class="enter-psw" id="enter-psw" style="display:none;">登录密码</span> -->
+							</div>
+							<div class="form-group">
+								<input type="text" id="input" th:placeholder="验证码" /> 
+								<input type="button" id="code"
+									onclick="createCode()" />
+							</div>
+							<div class="form-group clearfix">
+								<input class="submit btn-green" id="submit" type="submit"
+									value="登 录" />
+							
+								<!-- <div class="right-btn">
+									<a href="#" th:text="#{login.forgetPassword}">忘记密码</a>
+								</div> -->
+							</div>
+							<span style="color:red;" th:text="${msg}" id="msg">登录名或密码错误!</span>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="footer-main"></div>
+	</div>
+</body>
+<script th:src="@{~/assets/js/jquery.min.js}"></script>
+<script type="text/javascript">
+	var code; //在全局定义验证码   
+	//产生验证码  
+	window.onload =createCode();
+	 function createCode() {
+		code = "";
+		var codeLength = 4;//验证码的长度  
+		var checkCode = document.getElementById("code");
+		var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C',
+				'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+				'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');//随机数  
+		for ( var i = 0; i < codeLength; i++) {//循环操作  
+			var index = Math.floor(Math.random() * 36);//取得随机数的索引（0~35）  
+			code += random[index];//根据索引取得随机数加到code上  
+		}
+		checkCode.value = code;//把code值赋给验证码  
+	};
+	//校验验证码  
+	var validate=function() {
+		var inputCode = document.getElementById("input").value.toUpperCase(); //取得输入的验证码并转化为大写        
+		if (inputCode.length <= 0) { //若输入的验证码长度为0  
+			//alert("请输入验证码！"); //则弹出请输入验证码  
+			$("#msg").text("请输入验证码！");
+			return false;
+		} else if (inputCode != code) { //若输入的验证码与产生的验证码不一致时  
+			//alert("验证码输入错误！@_@"); //则弹出验证码输入错误  
+			$("#msg").text("验证码输入错误！ ");
+			createCode();//刷新验证码  
+			document.getElementById("input").value = "";//清空文本框  
+			return false;
+		} else { //输入正确时  
+			//alert("^-^"); //弹出^-^  
+			return true;
+		}
+	};
+	
+	/* function submit(){
+		//$("#submit").on("click", function(e) {
+			//验证码是否正确
+		//	e.preventDefault();
+			if(validate()){
+				$("#form").submit();//序列化表单数据
+				//$.post($("form").attr("action"),_data,function(){});
+			}
+			//提交
+
+		}
+	 */
+</script>
+</html>

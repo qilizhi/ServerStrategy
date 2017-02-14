@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.strategy.addForm.strategyEdit}" >策略编辑</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.strategy.addForm.strategyManagement}" >策略管理</a></li>
+		<li th:text="#{views.strategy.addForm.strategyAdd}" ><!-- <a th:href="@{~/server/list}" >策略列表</a> --></li>
+		<li class="am-active" th:text="#{views.strategy.addForm.strategyForm}">表单</li>
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-form" th:text="${title}"></span>
+				
+			</div>
+			<!--     <div class="tpl-portlet-input tpl-fz-ml">
+                        <div class="portlet-input input-small input-inline">
+                            <div class="input-icon right">
+                                <i class="am-icon-search"></i>
+                                <input type="text" class="form-control form-control-solid" placeholder="搜索..."> </div>
+                        </div>
+                    </div> -->
+	
+
+		</div>
+		<div class="tpl-block ">
+
+			<div class="am-g tpl-amazeui-form">
+				<div class="am-u-sm-12 am-u-md-9">
+					<form class="am-form am-form-horizontal"
+						th:action="@{~/strategy/saveOrUpdate}" method="post">
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.name}">名称</label>
+							<div class="am-u-sm-6">
+								<input type="text" name="name" 		placeholder="昵称 / Name" />
+								 <small id="nameTip" style="color:red;display:none" th:text="#{strategy.name.repleat}" >字段重复</small>
+							</div>
+							<div class="am-u-sm-3" >
+								<input type="hidden" name="isDefault"  value="0"
+									placeholder="昵称 / Name" />
+							<span style="color:red;display:none" id="defaultShow" th:text="#{strategy.firstAdd.default}">首次"新增"为新增"默认策略"</span>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.description}">说明</label>
+							<div class="am-u-sm-6 am-u-end">
+								<input type="text"  name="description"
+									placeholder="说明描述/description " />
+								<!-- <small>输入你的名字，让我们记住你。</small> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-email" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.type}">策略类型
+							</label>
+							<div class="am-u-sm-3 am-u-end">
+								<select name="type" 
+									class="chosen-select  selectInit"
+									th:action="@{~/strategyType/listAll}" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option th:text="#{views.strategy.addForm.pleaseSelect}">请选择</option>
+								</select>
+								<!--   <small>邮箱你懂得...</small> -->
+							</div>
+						</div>
+
+
+						<div class="am-form-group">
+							<label class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.server}">服务器 </label>
+							<div class="am-u-sm-6 am-u-end">
+								<select multiple name="servers" th:action="@{~/server/listAll}"
+									class="chosen-select selectServer" th:attr="data-placeholder=#{operation.pleaseSelect}">
+						<!-- 			<option value="" th:text="#{views.strategy.addForm.pleaseSelect}">请选择</option> -->
+								<!-- 	<option ></option> -->
+								</select>
+								<!-- <input type="tel" id="user-phone" name="country" th:value="${obj.country}" placeholder="输入你的国家/country"/> -->
+							</div>
+						</div>
+
+
+						<div class="am-form-group">
+							<label class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.country}">国家 </label>
+							<div class="am-u-sm-5">
+								<select name="country" 
+									th:action="@{~/area/country}"
+									class="chosen-select selectCountry" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option value="" th:text="#{views.strategy.addForm.pleaseSelect}"></option>
+								</select>
+							</div>
+								<div class="am-u-sm-3 am-u-end">
+								 <input type="checkbox"  name="isNotCountry"  placeholder="非/not"/> <span class="am-form-label" th:text="#{notCountry}">非国家</span>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.region}">省</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select name="region" 	th:action="@{~/area/region}" class="chosen-select selectRegion"
+									th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option ></option>
+								</select>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.city}">市
+							</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select name="city" 
+									th:action="@{~/area/city}" class="chosen-select selectCity"
+									th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option ></option>
+								</select>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.isp}">运营商</label>
+							<div class="am-u-sm-6 am-u-end">
+								<select multiple name="isps" th:action="@{~/area/isp}"
+									class="chosen-select selectIsp" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option ></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label" th:text="#{views.strategy.addForm.status}">状态</label>
+							<div class="am-u-sm-9">
+								<select name="status" th:attr="data-placeholder=#{operation.pleaseSelect}">
+									<option value="1" th:text="#{views.strategy.addForm.start}">启用</option>
+									<option value="0" th:text="#{views.strategy.addForm.stop}">停用</option>
+								</select>
+								<!-- <input type="tel" id="status" name="status"
+									th:value="${obj.status}"
+									placeholder="服务器状态/status" /> -->
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<div class="am-u-sm-3 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-primary save" th:text="#{views.strategy.addForm.save}">保存</button>
+							</div>
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-primary cancel" th:text="#{views.strategy.addForm.cancel}">取消</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+<script type="text/javascript" th:src="@{~/assets/js/jquery.validate.js}"></script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+           
+	$(function() {
+		formSubmitInit();
+		//console.log($("input[name='name']"));
+		//重复较验
+		$("input[name='name']").keyup(function(e){
+			var url="/strategy/checkName";
+			var name=$("input[name='name']").val();
+			$("#defaultShow").css("display","none");
+			$.get(url,{name:name},function(result){
+				if(result.code="success"){
+					if(result.data>0){
+						$("#nameTip").css("display","block");
+					}else{
+						$("#nameTip").css("display","none");
+					}
+				}
+			});
+			
+		});
+		$("select[name='type']").on("change", function(e, params) {
+			if(params.selected){
+				$.get("/strategyType/"+params.selected.id,function(result){
+					if(result.code=="success"){
+						if(result.data==0){
+						$("#defaultShow").css("display","block");
+						$("input[name='isDefault']").val(1);
+						}else{
+						$("#defaultShow").css("display","none");
+						$("input[name='isDefault']").val(0);
+						}
+					}else{
+						
+					}
+				});
+	
+			}
+			});
+		
+/* 		var validate=$(".tpl-amazeui-form form").validate( {
+			debug: true, //调试模式取消submit的默认提交功能   
+              //  errorClass: "val-error", //默认为错误的样式类为：error   
+                focusInvalid: false, //当为false时，验证无效时，没有焦点响应  
+               // onkeyup: true,   
+                submitHandler: function(form){   //表单提交句柄,为一回调函数，带一个参数：form   
+                    alert("提交表单");   
+                    form.submit();   //提交表单   
+                },   
+                rules:{
+                    name:{
+                        required:true
+                    },
+                    type:{
+                        required:true
+                       
+                    },
+                    country:{
+                        required:true
+                    },
+                    isp:{
+                    	required:true
+                    }                    
+                },
+                messages:{
+                    name:{
+                        required:"必填"
+                    },
+                    type:{
+                        required:"必填"
+                    },
+                    country:{
+                        required: "不能为空"
+                      
+                    },
+                    isp:{
+                    	  required: "不能为空"
+                    }                                    
+                }
+                          
+            });    */
+	});
+	
+	
+	function formSubmitInit(){
+		var $form = $(".tpl-amazeui-form form");
+		$(".am-form-group .save").on("click", function(e) {
+			//_data = $form.serializeArray();//序列化表单数据
+			//构造 数据data
+			var _data=new Object();
+			_data.id=$("input[name='id']").val();
+			_data.name=$("input[name='name']").val();
+			_data.isNotCountry=$("input[name='isNotCountry']")[0].checked;
+			_data.description=$("input[name='description']").val();
+			_data.isDefault=$("input[name='isDefault']").val();
+			_data.status=$("select[name='status']").val();
+			if(!_data.name){
+				comm.showMsg([[#{strategy.name.cantbeNull}]]);
+/* 				comm.showMsg("策略名字不能为空!"); */
+				return ;
+			}
+			
+			var typeSelected=$("select[name='type']");
+			if(typeSelected[0][typeSelected[0].selectedIndex].id){
+				_data.type=new Object();
+			_data.type.id=typeSelected[0][typeSelected[0].selectedIndex].id;
+			}else{
+				comm.showMsg([[#{please.select.type}]]);
+/* 				comm.showMsg("请选择策略类型!"); */
+				return ;
+			}
+			var countrySelected=$("select[name='country']");
+			if(countrySelected[0][countrySelected[0].selectedIndex].id){
+				_data.country=new Object();
+			_data.country.id=countrySelected[0][countrySelected[0].selectedIndex].id;
+			}else{
+				comm.showMsg([[#{please.select.country}]]);
+			/* 	comm.showMsg("请选择国家!"); */
+				return ;
+			}
+			var citySelected=$("select[name='city']");
+			if(citySelected[0][citySelected[0].selectedIndex].id){
+				_data.city=new Object();
+			_data.city.id=citySelected[0][citySelected[0].selectedIndex].id;
+			}
+			var regionSelected=$("select[name='region']");
+			if(regionSelected[0][regionSelected[0].selectedIndex].id){
+				_data.region=new Object();
+			_data.region.id=regionSelected[0][regionSelected[0].selectedIndex].id;
+			}
+			//console.log($("select[name='servers'] option:selected"));
+			//isps=$("select[name='isps']")[0].selectedOptions;
+			isps=$("select[name='isps'] option:selected");
+			//servers=$("select[name='servers']")[0].selectedOptions;
+			servers=$("select[name='servers'] option:selected");
+			if(servers){
+				_data.servers=new Array();
+				if(servers.length==0){
+					comm.showMsg([[#{strategy.server.cantbeNull}]]);
+				/* 	comm.showMsg("服务器不能为空!"); */
+					return ;
+				}
+			for(var i=0;i<servers.length;i++){
+				if(servers[i]){
+				_data.servers[i]=new Object();
+				_data.servers[i].id=servers[i].id;
+				}
+			}
+			}else{
+				comm.showMsg([[#{please.select.server}]]);
+/* 				comm.showMsg("请选择服务器!"); */
+				return ;
+			}
+			if(isps){
+			_data.isps=new Array();
+			if(isps.length==0){
+				/* comm.showMsg("运营商不能为空!"); */
+				comm.showMsg([[#{strategy.isp.canbeNull}]]);
+				return;}
+			for(var i=0;i<isps.length;i++){
+				if(isps[i]){
+				_data.isps[i]=new Object();
+				_data.isps[i].id=isps[i].id;
+				}
+			}
+			}else{
+/* 				comm.showMsg("请选择运营商!"); */
+				comm.showMsg([[#{please.select.isp}]]);
+				return ;
+			}
+		//	console.log(JSON.stringify(_data));
+		//	console.log(_data);
+			$btn = $(".am-form-group .save");
+			$btn.attr("disabled", "disabled");
+			$btn.text([[#{operation.submitting}]]);
+			url=$form.attr("action");
+			 $.ajax({ 
+		            type:"POST", 
+		            url:url, 
+		            dataType:"json",      
+		           contentType:"application/json",               
+		            data:JSON.stringify(_data), 
+		            success:function(result){ 
+		            	if (result.code == "success") {
+							//comm.showMsg("操作成功");
+							setTimeout(function() {
+								window.location.href = "/strategy/list?type.id="+$("select[name='type'] option:selected")[0].id;
+							},100);
+						} else if (result.code == "fail") {
+							comm.showMsg([[#{operation.failMsg}]]);
+							$btn.removeAttr("disabled", "disabled");
+							$btn.text([[#{operation.submit}]]);                         
+		            } 
+		            }
+		         }); 
+
+		});
+		$(".am-form-group .cancel").on("click", function(e) {
+			window.location.href = "/strategyType/list";
+		});
+	}
+	
+	 /*]]>*/
+</script>
+<!-- //options.concat("<option value="+obj.id).concat(" selected=").concat("'").concat("selected").concat("'").concat(">").concat(obj.name+"</option>");
+				//options=options+("<option value="+obj.id+" selected=\'selected\'>"+obj.name+"</option>");
+			/*[+
+				options=options+("<option value="+obj.id+" selected=\'selected\'>"+obj.name+"</option>");
+				+]*/ -->
+
+</html>

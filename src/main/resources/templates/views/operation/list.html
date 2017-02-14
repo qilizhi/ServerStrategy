@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<div class="tpl-content-wrapper">
+	<div class="tpl-content-page-title" th:text="#{views.operation.list.operationLog}">操作日志列表</div>
+	<ol class="am-breadcrumb">
+		<li><a href="#" class="am-icon-home" th:text="#{views.operation.list.systemManagement}" >系统管理</a></li>
+		<li th:text="#{views.operation.list.logManagement}"><!-- <a th:href="@{~/user/list}" >操作日志管理</a> --></li>
+		<!--    <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">Amaze UI CSS</a></li>
+                <li class="am-active">文字列表</li> -->
+	</ol>
+	<div class="tpl-portlet-components">
+		<div class="portlet-title">
+			<div class="caption font-green bold">
+				<span class="am-icon-table" th:text="#{views.operation.list.list}"> 列表</span>
+			</div>
+			<div class="tpl-portlet-input tpl-fz-ml">
+				<div class="portlet-input input-small input-inline">
+					<!-- <div class="input-icon right">
+						<i class="am-icon-search"></i> <input type="text"
+							class="form-control form-control-solid" placeholder="搜索..." />
+					</div> -->
+				</div>
+			</div>
+
+
+		</div>
+		<div class="tpl-block">
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-md-6">
+					<div class="am-btn-toolbar">
+						<div class="am-btn-group am-btn-group-xs">
+							<!-- <button type="button" th:href="@{~/user/add}"
+								class="am-btn am-btn-default am-btn-success list-add">
+								<span class="am-icon-plus"></span> 新增
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-secondary">
+								<span class="am-icon-save"></span> 保存
+							</button>
+							<button type="button"
+								class="am-btn am-btn-default am-btn-warning">
+								<span class="am-icon-archive"></span> 审核
+							</button>
+							<button type="button" class="am-btn am-btn-default am-btn-danger">
+								<span class="am-icon-trash-o"></span> 删除
+							</button> -->
+						</div>
+					</div>
+				</div>
+				<form th:action="@{~/operation/list}" th:method="post" id="searchForm">
+				<div class="am-u-sm-12 am-u-md-3">
+					<div class="am-form-group">
+						<!-- <select data-am-selected="{btnSize: 'sm'}">
+							<option value="option1">所有类别</option>
+							<option value="option2">IT业界</option>
+							<option value="option3">数码产品</option>
+							<option value="option3">笔记本电脑</option>
+							<option value="option3">平板电脑</option>
+							<option value="option3">只能手机</option>
+							<option value="option3">超极本</option>
+						</select> -->
+					</div>
+				</div>
+					
+				<div class="am-u-sm-12 am-u-md-3">
+					<div class="am-input-group am-input-group-sm">
+						<input type="text" name="path" placeholder="path/路径" th:value="${obj.path}" class="am-form-field" /> <span
+							class="am-input-group-btn">
+							<button
+								class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
+								type="submit"></button>
+						</span>
+
+					</div>
+					<input type="hidden" name="page" >
+					<input type="hidden" name="size" >
+				</div>
+			
+				</form>
+			</div>
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					<form class="am-form">
+						<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+								<tr>
+									<!-- <th class="table-check">
+									
+									<input type="checkbox"
+										 />
+									</th> -->
+									<th class="table-id" th:text="#{views.operation.list.NO}">编号</th>
+									<th class="table-title" th:text="#{views.operation.list.userId}" >用户ID</th>
+									<th class="table-type" th:text="#{views.operation.list.userName}">登录名</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.operation.list.className}">类名</th>
+									<th class="table-author am-hide-sm-only" th:text="#{views.operation.list.method}">方法</th>
+									<th class="table-date am-hide-sm-only" th:text="#{views.operation.list.content}">内容</th>
+									<th class="table-set" th:text="#{views.operation.list.params}">请求参数</th>
+									<th class="table-set" th:text="#{views.operation.list.operation}">请求操作</th>
+									<th class="table-set" th:text="#{views.operation.list.path}">请求路径</th>
+									<!-- <th class="table-set" th:text="#{views.operation.list.result}">请求结果</th> -->
+									<th class="table-set" th:text="#{views.operation.list.createTime}">创建 时间</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="obj,iterStat:${pageList.getContent()}">
+									<!-- <td>
+									<input type="checkbox" />
+									</td> -->
+								<!-- 	<td th:text="${iterStat.count}"></td> -->
+									<td th:text="${obj.id}"></td>
+									<td th:text="${obj.userId}">
+										<!-- <a href="#">Business management</a> -->
+									</td>
+									<td th:text="${obj.username}">default</td>
+									<td class="am-hide-sm-only" th:text="${obj.className}">测试1号</td>
+									<td class="am-hide-sm-only" th:text="${obj.method}">测试1号</td>
+									<td class="am-hide-sm-only" th:text="${obj.content}">2014年9月4日
+										7:28:47</td>
+									<td class="am-hide-sm-only" th:text="${obj.params}">2014年9月4日
+										7:28:47</td>
+									<td class="am-hide-sm-only" th:text="${obj.operation}">2014年9月4日
+										7:28:47</td>
+									<td class="am-hide-sm-only" th:text="${obj.path}">2014年9月4日
+										7:28:47</td>
+								<!-- 	<td class="am-hide-sm-only" th:text="${obj.result}">2014年9月4日
+										7:28:47</td> -->
+									<td class="am-hide-sm-only" th:text="${#dates.format(obj.createTime, 'yyyy-MM-dd hh:mm:ss')}">2014年9月4日
+										7:28:47</td>
+								
+								</tr>
+
+							</tbody>
+						</table>
+						<!-- <div th:replace="layout/pagination::page(${pageList},${'~/operation/list'})"></div> -->
+						<div th:replace="layout/paginationjs::page(${pageList},${'~/operation/list'})"></div>
+						<hr />
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+		<div class="tpl-alert"></div>
+	</div>
+</div>
+<script type="text/javascript">
+
+function page(page,size){
+	$("input[name='page']").val(page);
+	$("input[name='size']").val(size);
+	$("#searchForm").submit();
+	/* 
+	var url=$("#searchForm").attr("action")+"?page="+page+"&size="+size; */
+	
+}
+
+</script>
+</html>
