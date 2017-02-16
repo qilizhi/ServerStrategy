@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Table
 @Entity
 public class OperationLog implements Serializable {
@@ -121,6 +123,7 @@ public class OperationLog implements Serializable {
 		this.operation = operation;
 	}
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEndTime() {
 		return endTime;
@@ -129,7 +132,7 @@ public class OperationLog implements Serializable {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getStartTime() {
 		return startTime;
